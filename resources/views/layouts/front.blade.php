@@ -1,9 +1,15 @@
 @extends('layouts.master')
 
 @section('page')
-    <div class="row">
-        @yield('content')
+    @include('layouts.header')
 
-        @include('layouts.sidebar')
-    </div><!-- /.row -->
+    <main role="main" class="container">
+        <div class="row">
+            @yield('content')
+
+            @include('layouts.sidebar')
+        </div><!-- /.row -->
+    </main><!-- /.container -->
+
+    @include('layouts.footer')
 @endsection

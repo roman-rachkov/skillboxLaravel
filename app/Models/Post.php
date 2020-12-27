@@ -15,4 +15,8 @@ class Post extends Model
         return 'slug';
     }
 
+    public function scopePublished($query){
+        return $query->where('published', true);
+    }
+
 }

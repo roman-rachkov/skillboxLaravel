@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreFeedbackRequest;
+use App\Models\Feedback;
 use Illuminate\Http\Request;
 
-class ContactsController extends Controller
+class FeedbackController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -13,7 +15,10 @@ class ContactsController extends Controller
      */
     public function index()
     {
-        //
+        return view('admin.feedback.show')
+            ->with('title', 'Список обращений')
+            ->with('feedbacks', Feedback::latest()->paginate())
+            ;
     }
 
     /**
@@ -29,12 +34,15 @@ class ContactsController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param StoreFeedbackRequest $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreFeedbackRequest $request)
     {
-        //
+        if($request->validated()){
+            $feedback = Feedback::create($request->except('_token'));
+            return redirect(route('main'));
+        }
     }
 
     /**
@@ -43,9 +51,9 @@ class ContactsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show()
     {
-        //
+        return view('contacts.show')->with('title', 'Контакты');
     }
 
     /**
