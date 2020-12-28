@@ -1,5 +1,7 @@
 @extends('layouts.admin')
 
+@section('title', 'Список обращений')
+
 @section('content')
 
     <table class="table table-hover">

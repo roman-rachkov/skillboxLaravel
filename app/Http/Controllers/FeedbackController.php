@@ -16,9 +16,7 @@ class FeedbackController extends Controller
     public function index()
     {
         return view('admin.feedback.show')
-            ->with('title', 'Список обращений')
-            ->with('feedbacks', Feedback::latest()->paginate())
-            ;
+            ->with('feedbacks', Feedback::latest()->paginate());
     }
 
     /**
@@ -39,27 +37,26 @@ class FeedbackController extends Controller
      */
     public function store(StoreFeedbackRequest $request)
     {
-        if($request->validated()){
-            $feedback = Feedback::create($request->except('_token'));
-            return redirect(route('main'));
-        }
+        $feedback = Feedback::create($request->validated());
+        return redirect(route('main'));
+
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function show()
     {
-        return view('contacts.show')->with('title', 'Контакты');
+        return view('contacts.show');
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -70,8 +67,8 @@ class FeedbackController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -82,7 +79,7 @@ class FeedbackController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)

@@ -16,7 +16,7 @@ class PostController extends Controller
     public function index()
     {
         $posts = Post::published()->latest()->paginate();
-        return view('index', compact('posts'))->with('title', 'Главная');
+        return view('index', compact('posts'));
     }
 
     /**
@@ -26,7 +26,7 @@ class PostController extends Controller
      */
     public function create()
     {
-        return view('post.create')->with('title', 'Новая статья');
+        return view('post.create');
     }
 
     /**
@@ -37,10 +37,8 @@ class PostController extends Controller
      */
     public function store(StorePostRequest $request)
     {
-        if ($request->validated()) {
-            $post = Post::create($request->except(['_token']));
-            return redirect(route('View Post', ['slug' => $post->slug]));
-        }
+        $post = Post::create($request->validated());
+        return redirect(route('View Post', ['slug' => $post->slug]));
     }
 
     /**
@@ -51,7 +49,7 @@ class PostController extends Controller
      */
     public function show(Post $slug)
     {
-        return view('post.show')->with('post', $slug)->with('title', $slug->name);
+        return view('post.show')->with('post', $slug);
     }
 
     /**

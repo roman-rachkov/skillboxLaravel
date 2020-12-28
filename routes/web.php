@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', 'App\Http\Controllers\PostController@index')->name('main');
 
 Route::get('/about', function () {
-    return view('about')->with('title', 'О нас');
+    return view('about');
 })->name('about');
 
 Route::get('/admin', 'App\Http\Controllers\FeedbackController@index')->name('admin');

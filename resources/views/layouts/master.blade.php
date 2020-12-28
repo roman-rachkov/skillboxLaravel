@@ -7,7 +7,7 @@
     <meta name="author" content="">
 {{--    <link rel="icon" href="/docs/4.1/assets/img/favicons/favicon.ico">--}}
 
-    <title>{{$title ?? 'Laravel Blog'}}</title>
+    <title>@yield('title', 'Laravel Blog')</title>
 
     <link rel="canonical" href="https://getbootstrap.com/docs/4.1/examples/blog/">
 
