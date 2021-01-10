@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('page')
-    @include('layouts.admin-header')
+    @include('layouts.header')
 
     <main role="main" class="container">
         <div class="row">

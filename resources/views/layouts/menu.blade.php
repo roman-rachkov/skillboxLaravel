@@ -7,3 +7,4 @@
         <a class="p-2 text-muted" href="{{route('admin')}}">Административный раздел</a>
     </nav>
 </div>
+<hr>

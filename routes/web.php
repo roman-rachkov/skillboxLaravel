@@ -32,3 +32,5 @@ Route::resource('posts', 'App\Http\Controllers\PostController');
 
 Route::get('/login', 'App\Http\Controllers\UserController@login')->name('user.login');
 Route::post('/login', 'App\Http\Controllers\UserController@authenticate')->name('user.auth');
+Route::get('/register', 'App\Http\Controllers\UserController@register')->name('user.register');
+Route::post('/register', 'App\Http\Controllers\UserController@create')->name('user.create');
