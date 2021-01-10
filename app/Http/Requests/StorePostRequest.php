@@ -28,7 +28,8 @@ class StorePostRequest extends FormRequest
             'slug' => ['required','unique:posts','max:150', new English],
             'name' => 'required|max:100|min:5',
             'shortDesc' => 'required|max:250',
-            'longDesc' => 'required'
+            'longDesc' => 'required',
+            'published' => ''
         ];
     }
 }

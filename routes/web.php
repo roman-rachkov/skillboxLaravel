@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
 Route::get('/', 'App\Http\Controllers\PostController@index')->name('main');
 
 Route::get('/about', function () {
@@ -23,6 +24,8 @@ Route::get('/admin', 'App\Http\Controllers\FeedbackController@index')->name('adm
 Route::get('/contacts', 'App\Http\Controllers\FeedbackController@show')->name('contacts');
 Route::post('/contacts', 'App\Http\Controllers\FeedbackController@store')->name('Store message');
 
-Route::post('/posts', 'App\Http\Controllers\PostController@store')->name('Store Post');
-Route::get('/posts/create', 'App\Http\Controllers\PostController@create')->name('New Post');
-Route::get('/posts/{slug}', 'App\Http\Controllers\PostController@show')->name('View Post');
+//Route::post('/posts', 'App\Http\Controllers\PostController@store')->name('Store Post');
+//Route::get('/posts/create', 'App\Http\Controllers\PostController@create')->name('New Post');
+//Route::get('/posts/{slug}', 'App\Http\Controllers\PostController@show')->name('View Post');
+
+Route::resource('posts', 'App\Http\Controllers\PostController');

@@ -8,7 +8,7 @@
             @yield('title')
         </h3>
 
-        <form method="post" action="{{route('Store Post')}}">
+        <form method="post" action="{{route('posts.store')}}">
             @csrf
             <div class="mb-3">
                 <label for="post-slug" class="form-label">Адрес статьи</label>

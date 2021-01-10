@@ -38,7 +38,7 @@ class PostController extends Controller
     public function store(StorePostRequest $request)
     {
         $post = Post::create($request->validated());
-        return redirect(route('View Post', ['slug' => $post->slug]));
+        return redirect(route('posts.show', ['post' => $post->slug]));
     }
 
     /**
@@ -47,9 +47,9 @@ class PostController extends Controller
      * @param Post $slug
      * @return \Illuminate\Http\Response
      */
-    public function show(Post $slug)
+    public function show(Post $post)
     {
-        return view('post.show')->with('post', $slug);
+        return view('post.show')->with('post', $post);
     }
 
     /**
