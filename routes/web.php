@@ -29,3 +29,6 @@ Route::post('/contacts', 'App\Http\Controllers\FeedbackController@store')->name(
 //Route::get('/posts/{slug}', 'App\Http\Controllers\PostController@show')->name('View Post');
 
 Route::resource('posts', 'App\Http\Controllers\PostController');
+
+Route::get('/login', 'App\Http\Controllers\UserController@login')->name('user.login');
+Route::post('/login', 'App\Http\Controllers\UserController@authenticate')->name('user.auth');
