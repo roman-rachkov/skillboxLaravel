@@ -32,3 +32,12 @@ Route::get('/register', 'App\Http\Controllers\UserController@register')->name('u
 Route::post('/register', 'App\Http\Controllers\UserController@create')->name('user.create');
 Route::get('/profile', 'App\Http\Controllers\UserController@show')->name('user.show');
 Route::post('/logout', 'App\Http\Controllers\UserController@logout')->name('user.logout');
+
+Route::get('/forgot-password', 'App\Http\Controllers\UserController@passwordRequest')
+    ->middleware('guest')->name('password.request');
+Route::post('/forgot-password', 'App\Http\Controllers\UserController@passwordEmail')
+    ->middleware('guest')->name('password.email');
+Route::get('/reset-password/{token}', 'App\Http\Controllers\UserController@')
+    ->middleware('guest')->name('password.reset');
+Route::post('/reset-password', 'App\Http\Controllers\UserController@passwordUpdate')
+    ->middleware('guest')->name('password.update');

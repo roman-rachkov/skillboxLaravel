@@ -3,11 +3,6 @@
 @section('title', 'Новая статья')
 
 @section('content')
-    <div class="col-md-8 blog-main">
-        <h3 class="pb-3 mb-4 font-italic border-bottom">
-            @yield('title')
-        </h3>
-
         <form method="post" action="{{route('posts.store')}}">
             @csrf
             <div class="mb-3">
@@ -75,8 +70,6 @@
             </div>
             <button type="submit" class="btn btn-primary">Сохранить</button>
         </form>
-
-    </div><!-- /.blog-main -->
 @endsection
 
 

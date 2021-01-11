@@ -1,6 +1,6 @@
 @extends('layouts.front')
 
-@section('title', 'Регистрация')
+@section('title', 'Востановление пароля')
 
 @section('content')
 
@@ -59,7 +59,9 @@
             </div>
             @enderror
         </div>
+        <input type="hidden" value="{{$token}}" name="token">
         <button type="submit" class="btn btn-primary">Зарегистрироваться</button>
     </form>
+
 
 @endsection

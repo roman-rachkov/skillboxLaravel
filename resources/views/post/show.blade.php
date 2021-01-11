@@ -3,17 +3,12 @@
 @section('title', $post->name)
 
 @section('content')
-    <div class="col-md-8 blog-main">
-        <h3 class="pb-3 mb-4 font-italic border-bottom">
-            @yield('title')
-        </h3>
-        <p class="blog-post-meta">{{$post->created_at->toFormattedDateString()}}</p>
 
-        <p>{{$post->shortDesc}}</p>
-        <p>{{$post->longDesc}}</p>
-        <hr>
-        <a href="#" onclick="history.back()">Вернуться назад</a>
+    <p class="blog-post-meta">{{$post->created_at->toFormattedDateString()}}</p>
 
-    </div><!-- /.blog-post -->
+    <p>{{$post->shortDesc}}</p>
+    <p>{{$post->longDesc}}</p>
+    <hr>
+    <a href="#" onclick="history.back()">Вернуться назад</a>
 
 @endsection

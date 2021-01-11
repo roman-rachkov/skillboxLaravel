@@ -6,6 +6,7 @@ use App\Http\Requests\UserLoginRequest;
 use App\Http\Requests\UserRegistrationRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Password;
 
 class UserController extends Controller
 {
@@ -46,4 +47,55 @@ class UserController extends Controller
 
         return redirect(route('main'));
     }
+
+    public function show(){
+        return redirect(route('main'));
+    }
+
+    public function passwordRequest(){
+        return view('user.password-forgot');
+    }
+
+    public function passwordEmail(Request $request){
+        $request->validate(['email' => 'required|email']);
+
+        $status = Password::sendResetLink(
+            $request->only('email')
+        );
+
+        return $status === Password::RESET_LINK_SENT
+            ? back()->with(['status' => __($status)])
+            : back()->withErrors(['email' => __($status)]);
+    }
+
+    public function passwordReset($token){
+        return view('user.reset-password', ['token' => $token]);
+    }
+
+    public function passwordUpdate(Request $request){
+        $request->validate([
+            'token' => 'required',
+            'email' => 'required|email',
+            'password' => 'required|min:8|confirmed',
+            'confirm-password' => 'required|same:password'
+        ]);
+
+        $status = Password::reset(
+            $request->only('email', 'password', 'confirm-password', 'token'),
+            function ($user, $password) use ($request) {
+                $user->forceFill([
+                    'password' => Hash::make($password)
+                ])->save();
+
+                $user->setRememberToken(Str::random(60));
+
+                event(new PasswordReset($user));
+            }
+        );
+
+        return $status == Password::PASSWORD_RESET
+            ? redirect()->route('login')->with('status', __($status))
+            : back()->withErrors(['email' => [__($status)]]);
+    }
+
 }

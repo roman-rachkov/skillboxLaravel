@@ -4,12 +4,6 @@
 
 @section('content')
 
-    <div class="col-md-8 blog-main">
-        <h3 class="pb-3 mb-4 font-italic border-bottom">
-            @yield('title')
-        </h3>
-        <hr>
-
         <form action="{{route('user.auth')}}" method="post">
             @csrf
             <div class="mb-3">
@@ -38,8 +32,8 @@
                 </div>
                 @enderror
             </div>
-            <button type="submit" class="btn btn-primary">Войти</button>
+            <button type="submit" class="btn btn-primary me-2">Войти</button>
+            <a href="{{route('password.request')}}">Забыли паролиь?</a>
         </form>
 
-    </div>
 @endsection
