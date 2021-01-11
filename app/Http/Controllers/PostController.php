@@ -26,6 +26,9 @@ class PostController extends Controller
      */
     public function create()
     {
+        if(!\Gate::allows('create-post')){
+            return redirect(route('user.login'));
+        }
         return view('post.create');
     }
 
@@ -37,6 +40,9 @@ class PostController extends Controller
      */
     public function store(StorePostRequest $request)
     {
+        if(!\Gate::allows('create-post')){
+            return redirect(route('user.login'));
+        }
         $post = Post::create($request->validated());
         return redirect(route('posts.show', ['post' => $post->slug]));
     }

@@ -46,15 +46,15 @@
             @enderror
         </div>
         <div class="mb-3">
-            <label for="confirm-password" class="form-label">Повторите пароль</label>
-            <input type="password" class="form-control @error('confirm-password') is-invalid @enderror"
-                   id="confirm-password"
-                   placeholder="******" name="confirm-password"
-                   aria-describedby="confirm-password-validation-feedback"
+            <label for="password_confirmation" class="form-label">Повторите пароль</label>
+            <input type="password" class="form-control @error('password_confirmation') is-invalid @enderror"
+                   id="password_confirmation"
+                   placeholder="******" name="password_confirmation"
+                   aria-describedby="password_confirmation-validation-feedback"
                    required maxlength="100" minlength="6"
             >
-            @error('confirm-password')
-            <div id="confirm-password-validation-feedback" class="invalid-feedback">
+            @error('password_confirmation')
+            <div id="password_confirmation-validation-feedback" class="invalid-feedback">
                 {{$message}}
             </div>
             @enderror

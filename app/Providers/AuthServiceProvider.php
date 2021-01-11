@@ -25,6 +25,9 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        //
+        Gate::define('create-post', function (){
+            return (bool) \Auth::user();
+        });
+
     }
 }

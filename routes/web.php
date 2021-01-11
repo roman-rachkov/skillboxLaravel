@@ -26,12 +26,17 @@ Route::post('/contacts', 'App\Http\Controllers\FeedbackController@store')->name(
 
 Route::resource('posts', 'App\Http\Controllers\PostController');
 
-Route::get('/login', 'App\Http\Controllers\UserController@login')->name('user.login');
-Route::post('/login', 'App\Http\Controllers\UserController@authenticate')->name('user.auth');
-Route::get('/register', 'App\Http\Controllers\UserController@register')->name('user.register');
-Route::post('/register', 'App\Http\Controllers\UserController@create')->name('user.create');
+Route::get('/login', 'App\Http\Controllers\UserController@login')
+    ->middleware('guest')->name('user.login');
+Route::post('/login', 'App\Http\Controllers\UserController@authenticate')
+    ->middleware('guest')->name('user.auth');
+Route::get('/register', 'App\Http\Controllers\UserController@register')
+    ->middleware('guest')->name('user.register');
+Route::post('/register', 'App\Http\Controllers\UserController@create')
+    ->middleware('guest')->name('user.create');
 Route::get('/profile', 'App\Http\Controllers\UserController@show')->name('user.show');
-Route::post('/logout', 'App\Http\Controllers\UserController@logout')->name('user.logout');
+Route::post('/logout', 'App\Http\Controllers\UserController@logout')
+    ->middleware('auth')->name('user.logout');
 
 Route::get('/forgot-password', 'App\Http\Controllers\UserController@passwordRequest')
     ->middleware('guest')->name('password.request');

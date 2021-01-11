@@ -27,7 +27,7 @@ class UserRegistrationRequest extends FormRequest
             'name' => 'required|max:100|min:6|unique:users',
             'email' => 'required|email:rfc|unique:users',
             'password'=>'required|min:6',
-            'confirm-password' => 'required|same:password'
+            'password_confirmation' => 'required|same:password'
         ];
     }
 }

@@ -148,7 +148,7 @@ return [
     */
 
     'attributes' => [
-        'confirm-password' => 'подтверждение пароля',
+        'password_confirmation' => 'подтверждение пароля',
         'password' => 'пароль',
         'name' => 'имя'
     ],
