@@ -4,21 +4,8 @@
 
 @section('content')
 
-    <form action="{{route('user.create')}}" method="post">
+    <form action="{{route('password.update')}}" method="post">
         @csrf
-        <div class="mb-3">
-            <label for="name" class="form-label">Имя</label>
-            <input type="text" class="form-control @error('name') is-invalid @enderror" id="name"
-                   placeholder="VeryCoolUserName" name="name"
-                   aria-describedby="name-validation-feedback"
-                   required maxlength="100" value="{{old('name')}}"
-            >
-            @error('name')
-            <div id="name-validation-feedback" class="invalid-feedback">
-                {{$message}}
-            </div>
-            @enderror
-        </div>
         <div class="mb-3">
             <label for="email" class="form-label">E-mail</label>
             <input type="email" class="form-control @error('email') is-invalid @enderror" id="email"
@@ -46,22 +33,20 @@
             @enderror
         </div>
         <div class="mb-3">
-            <label for="confirm-password" class="form-label">Повторите пароль</label>
-            <input type="password" class="form-control @error('confirm-password') is-invalid @enderror"
-                   id="confirm-password"
-                   placeholder="******" name="confirm-password"
-                   aria-describedby="confirm-password-validation-feedback"
+            <label for="password_confirmation" class="form-label">Повторите пароль</label>
+            <input type="password" class="form-control @error('password_confirmation') is-invalid @enderror"
+                   id="password_confirmation"
+                   placeholder="******" name="password_confirmation"
+                   aria-describedby="password_confirmation-validation-feedback"
                    required maxlength="100" minlength="6"
             >
-            @error('confirm-password')
-            <div id="confirm-password-validation-feedback" class="invalid-feedback">
+            @error('password_confirmation')
+            <div id="password_confirmation-validation-feedback" class="invalid-feedback">
                 {{$message}}
             </div>
             @enderror
         </div>
         <input type="hidden" value="{{$token}}" name="token">
-        <button type="submit" class="btn btn-primary">Зарегистрироваться</button>
+        <button type="submit" class="btn btn-primary">Обновить пароль</button>
     </form>
-
-
 @endsection

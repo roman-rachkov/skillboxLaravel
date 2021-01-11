@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\UserLoginRequest;
 use App\Http\Requests\UserRegistrationRequest;
 use App\Models\User;
+use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Password;
 
@@ -76,25 +77,24 @@ class UserController extends Controller
         $request->validate([
             'token' => 'required',
             'email' => 'required|email',
-            'password' => 'required|min:8|confirmed',
-            'confirm-password' => 'required|same:password'
+            'password' => 'required|min:6|confirmed'
         ]);
 
         $status = Password::reset(
-            $request->only('email', 'password', 'confirm-password', 'token'),
+            $request->only('email', 'password', 'password_confirmation', 'token'),
             function ($user, $password) use ($request) {
                 $user->forceFill([
-                    'password' => Hash::make($password)
+                    'password' => \Hash::make($password)
                 ])->save();
 
-                $user->setRememberToken(Str::random(60));
+                $user->setRememberToken(\Str::random(60));
 
                 event(new PasswordReset($user));
             }
         );
 
         return $status == Password::PASSWORD_RESET
-            ? redirect()->route('login')->with('status', __($status))
+            ? redirect()->route('user.login')->with('status', __($status))
             : back()->withErrors(['email' => [__($status)]]);
     }
 
