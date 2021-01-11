@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\UserLoginRequest;
 use App\Http\Requests\UserRegistrationRequest;
 use App\Models\User;
+use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
@@ -33,6 +34,16 @@ class UserController extends Controller
         $arr['password'] = \Hash::make($arr['password']);
         $user = User::create($arr);
         \Auth::login($user);
+        return redirect(route('main'));
+    }
+
+    public function logout(Request $request){
+        \Auth::logout();
+
+        $request->session()->invalidate();
+
+        $request->session()->regenerateToken();
+
         return redirect(route('main'));
     }
 }

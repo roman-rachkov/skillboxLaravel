@@ -24,13 +24,11 @@ Route::get('/admin', 'App\Http\Controllers\FeedbackController@index')->name('adm
 Route::get('/contacts', 'App\Http\Controllers\FeedbackController@show')->name('contacts');
 Route::post('/contacts', 'App\Http\Controllers\FeedbackController@store')->name('Store message');
 
-//Route::post('/posts', 'App\Http\Controllers\PostController@store')->name('Store Post');
-//Route::get('/posts/create', 'App\Http\Controllers\PostController@create')->name('New Post');
-//Route::get('/posts/{slug}', 'App\Http\Controllers\PostController@show')->name('View Post');
-
 Route::resource('posts', 'App\Http\Controllers\PostController');
 
 Route::get('/login', 'App\Http\Controllers\UserController@login')->name('user.login');
 Route::post('/login', 'App\Http\Controllers\UserController@authenticate')->name('user.auth');
 Route::get('/register', 'App\Http\Controllers\UserController@register')->name('user.register');
 Route::post('/register', 'App\Http\Controllers\UserController@create')->name('user.create');
+Route::get('/profile', 'App\Http\Controllers\UserController@show')->name('user.show');
+Route::post('/logout', 'App\Http\Controllers\UserController@logout')->name('user.logout');
