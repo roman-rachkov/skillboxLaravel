@@ -15,7 +15,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::published()->latest()->paginate();
+        $posts = Post::with('tags')->published()->latest()->paginate();
         return view('index', compact('posts'));
     }
 
@@ -29,7 +29,6 @@ class PostController extends Controller
         if(!\Gate::allows('create-post')){
             return redirect(route('user.login'));
         }
-        echo $post?->tags?->name;
         return view('post.create');
     }
 
