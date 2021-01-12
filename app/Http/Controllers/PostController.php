@@ -3,8 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StorePostRequest;
+use App\Http\Requests\UpdatePostRequest;
 use App\Models\Post;
+use App\Rules\English;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
+use phpDocumentor\Reflection\DocBlock\Tag;
 
 class PostController extends Controller
 {
@@ -26,10 +31,10 @@ class PostController extends Controller
      */
     public function create()
     {
-        if(!\Gate::allows('create-post')){
+        if (!\Gate::allows('create-post')) {
             return redirect(route('user.login'));
         }
-        return view('post.create');
+        return view('post.form');
     }
 
     /**
@@ -40,7 +45,7 @@ class PostController extends Controller
      */
     public function store(StorePostRequest $request)
     {
-        if(!\Gate::allows('create-post')){
+        if (!\Gate::allows('create-post')) {
             return redirect(route('user.login'));
         }
         $post = Post::create($request->validated());
@@ -64,21 +69,59 @@ class PostController extends Controller
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Post $post)
     {
-        //
+        return view('post.form', ['post' => $post]);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
-     * @param int $id
+     * @param Request $request
+     * @param Post $post
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Post $post)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'slug' => [
+                'required',
+                Rule::unique('posts')->ignore($post->id),
+                'max:150',
+                new English
+            ],
+            'name' => 'required|max:100|min:5',
+            'shortDesc' => 'required|max:250',
+            'longDesc' => 'required',
+            'published' => '',
+            'tags' => ''
+        ]);
+
+        if($validator->fails()){
+            return back()->withErrors($validator)->withInput();
+        }
+
+        $attributes = $request->all();
+        $post->update($attributes);
+
+        $postTags = $post->tags()->keyBy('name');
+
+        $tags = collect(explode(',', $attributes['tags']))->keyBy(fn($item) => $item);
+
+        $tagsToAttach = $tags->diffKeys($postTags);
+        $tagsToDetach = $postTags->diffKeys($tags);
+
+        foreach ($tagsToAttach as $tag){
+            $tag = Tag::firsOrCreate(['name' => $tag]);
+            $postTags->tags()->attach($tag);
+        }
+
+        foreach ($tagsToDetach as $tag){
+            $tag = Tag::firs(['name' => $tag]);
+            $postTags->tags()->detach($tag);
+        }
+
+        return back();
     }
 
     /**

@@ -29,7 +29,8 @@ class StorePostRequest extends FormRequest
             'name' => 'required|max:100|min:5',
             'shortDesc' => 'required|max:250',
             'longDesc' => 'required',
-            'published' => ''
+            'published' => '',
+            'tags' => ''
         ];
     }
 }
