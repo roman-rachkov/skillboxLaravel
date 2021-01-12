@@ -29,6 +29,7 @@ class PostController extends Controller
         if(!\Gate::allows('create-post')){
             return redirect(route('user.login'));
         }
+        echo $post?->tags?->name;
         return view('post.create');
     }
 
