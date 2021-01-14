@@ -1,3 +1,7 @@
+@php
+$post = $post ?? null;
+@endphp
+
 @extends('layouts.front')
 
 @section('title', (isset($post) ? 'Редктирование статьи' : 'Новая статья'))
@@ -45,8 +49,7 @@
             <input type="text" class="form-control @error('tags') is-invalid @enderror" id="tags"
                    placeholder="Дождь, интересное, новости" name="tags"
                    aria-describedby="tags-validation-feedback"
-                   value="{{old('tags', ((isset($post) && $post->tags->isNotEmpty()) ?
-                                            $post->tags->pluck('name')->implode(',') : ''))}}"
+                   value="{{old('tags', ($post?->tags?->pluck('name')->implode(',') ?? ''))}}"
             >
             @error('tags')
             <div id="tags-validation-feedback" class="invalid-feedback">
@@ -102,10 +105,6 @@
             postNameField.keyup(function (e) {
                 postSlugField.change();
             })
-            // postSlugField.change(function () {
-            //     let text = postSlugField.val() === '' ? '/page/statiya_o_dojde' : '/page/' + postSlugField.val()
-            //     $('#slug-help').text(text);
-            // });
         });
     </script>
 @endsection

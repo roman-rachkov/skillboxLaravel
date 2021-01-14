@@ -5,11 +5,11 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StorePostRequest;
 use App\Http\Requests\UpdatePostRequest;
 use App\Models\Post;
+use App\Models\Tag;
 use App\Rules\English;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
-use phpDocumentor\Reflection\DocBlock\Tag;
 
 class PostController extends Controller
 {
@@ -20,7 +20,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::with('tags')->published()->latest()->paginate();
+        $posts = Post::with('tags')->with('user')->published()->latest()->paginate();
         return view('index', compact('posts'));
     }
 
@@ -48,7 +48,13 @@ class PostController extends Controller
         if (!\Gate::allows('create-post')) {
             return redirect(route('user.login'));
         }
-        $post = Post::create($request->validated());
+
+        $post = \Auth::user()->posts()->create($request->validated());
+        $tags = collect(explode(',', $request->get('tags')))->keyBy(fn($item) => $item);
+        foreach ($tags as $tag){
+            $tag = Tag::firstOrCreate(['name' => $tag]);
+            $post->tags()->attach($tag);
+        }
         return redirect(route('posts.show', ['post' => $post->slug]));
     }
 
@@ -71,6 +77,9 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
+        if(!\Gate::allows('update-post', $post)){
+            abort(403);
+        }
         return view('post.form', ['post' => $post]);
     }
 
@@ -83,6 +92,9 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
+        if(!\Gate::allows('update-post', $post)){
+            abort(403);
+        }
         $validator = Validator::make($request->all(), [
             'slug' => [
                 'required',
@@ -112,12 +124,12 @@ class PostController extends Controller
         $tagsToDetach = $postTags->diffKeys($tags);
 
         foreach ($tagsToAttach as $tag){
-            $tag = Tag::firsOrCreate(['name' => $tag]);
+            $tag = Tag::firstOrCreate(['name' => $tag]);
             $postTags->tags()->attach($tag);
         }
 
         foreach ($tagsToDetach as $tag){
-            $tag = Tag::firs(['name' => $tag]);
+            $tag = Tag::first(['name' => $tag]);
             $postTags->tags()->detach($tag);
         }
 
