@@ -13,36 +13,38 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', 'App\Http\Controllers\PostController@index')->name('main');
+Route::get('/', 'PostsController@index')->name('main');
 
 Route::get('/about', function () {
     return view('about');
 })->name('about');
 
-Route::get('/admin', 'App\Http\Controllers\FeedbackController@index')->name('admin');
+Route::get('/admin', 'FeedbackController@index')->name('admin');
 
-Route::get('/contacts', 'App\Http\Controllers\FeedbackController@show')->name('contacts');
-Route::post('/contacts', 'App\Http\Controllers\FeedbackController@store')->name('Store message');
+Route::get('/contacts', 'FeedbackController@show')->name('contacts');
+Route::post('/contacts', 'FeedbackController@store')->name('Store message');
 
-Route::resource('posts', 'App\Http\Controllers\PostController');
+Route::get('/posts/tags/{tag}', 'TagsController@index')->name('tag');
 
-Route::get('/login', 'App\Http\Controllers\UserController@login')
+Route::resource('posts', 'PostsController');
+
+Route::get('/login', 'UserController@login')
     ->middleware('guest')->name('user.login');
-Route::post('/login', 'App\Http\Controllers\UserController@authenticate')
+Route::post('/login', 'UserController@authenticate')
     ->middleware('guest')->name('user.auth');
-Route::get('/register', 'App\Http\Controllers\UserController@register')
+Route::get('/register', 'UserController@register')
     ->middleware('guest')->name('user.register');
-Route::post('/register', 'App\Http\Controllers\UserController@create')
+Route::post('/register', 'UserController@create')
     ->middleware('guest')->name('user.create');
-Route::get('/profile', 'App\Http\Controllers\UserController@show')->name('user.show');
-Route::post('/logout', 'App\Http\Controllers\UserController@logout')
+Route::get('/profile', 'UserController@show')->name('user.show');
+Route::post('/logout', 'UserController@logout')
     ->middleware('auth')->name('user.logout');
 
-Route::get('/forgot-password', 'App\Http\Controllers\UserController@passwordRequest')
+Route::get('/forgot-password', 'UserController@passwordRequest')
     ->middleware('guest')->name('password.request');
-Route::post('/forgot-password', 'App\Http\Controllers\UserController@passwordEmail')
+Route::post('/forgot-password', 'UserController@passwordEmail')
     ->middleware('guest')->name('password.email');
-Route::get('/reset-password/{token}', 'App\Http\Controllers\UserController@passwordReset')
+Route::get('/reset-password/{token}', 'UserController@passwordReset')
     ->middleware('guest')->name('password.reset');
-Route::post('/reset-password', 'App\Http\Controllers\UserController@passwordUpdate')
+Route::post('/reset-password', 'UserController@passwordUpdate')
     ->middleware('guest')->name('password.update');

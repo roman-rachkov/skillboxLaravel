@@ -11,7 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 
-class PostController extends Controller
+class PostsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -61,7 +61,7 @@ class PostController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param Post $slug
+     * @param Post $post
      * @return \Illuminate\Http\Response
      */
     public function show(Post $post)
@@ -72,7 +72,7 @@ class PostController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param int $id
+     * @param Post $post
      * @return \Illuminate\Http\Response
      */
     public function edit(Post $post)
@@ -116,24 +116,18 @@ class PostController extends Controller
         $attributes = $request->all();
         $post->update($attributes);
 
-        $postTags = $post->tags()->keyBy('name');
+        $postTags = $post->tags->keyBy('name');
 
         $tags = collect(explode(',', $attributes['tags']))->keyBy(fn($item) => $item);
-
+        $ids = $postTags->intersectByKeys($tags)->pluck('id')->toArray();
         $tagsToAttach = $tags->diffKeys($postTags);
-        $tagsToDetach = $postTags->diffKeys($tags);
-
         foreach ($tagsToAttach as $tag){
             $tag = Tag::firstOrCreate(['name' => $tag]);
-            $postTags->tags()->attach($tag);
+            $ids[] = $tag->id;
         }
+        $post->tags()->sync($ids);
 
-        foreach ($tagsToDetach as $tag){
-            $tag = Tag::first(['name' => $tag]);
-            $postTags->tags()->detach($tag);
-        }
-
-        return back();
+        return redirect(route('posts.show', ['post'=> $post->slug]));
     }
 
     /**
@@ -142,7 +136,7 @@ class PostController extends Controller
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Post $post)
     {
         //
     }
