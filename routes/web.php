@@ -34,7 +34,7 @@ Route::get('/register', 'UserController@register')
     ->middleware('guest')->name('user.register');
 Route::post('/register', 'UserController@create')
     ->middleware('guest')->name('user.create');
-Route::get('/profile', 'UserController@show')->name('user.show');
+Route::get('/profile/{user}', 'UserController@show')->name('user.show');
 Route::post('/logout', 'UserController@logout')
     ->middleware('auth')->name('user.logout');
 

@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Post extends Model
 {
     use HasFactory;
+
     protected $fillable = ['slug', 'name', 'shortDesc', 'longDesc', 'published'];
 
     public function getRouteKeyName()

@@ -11,53 +11,66 @@ use Illuminate\Support\Facades\Password;
 
 class UserController extends Controller
 {
-    public function login(){
+    public function login()
+    {
         return view('user.login');
     }
 
-    public function authenticate(UserLoginRequest $request){
+    public function authenticate(UserLoginRequest $request)
+    {
 
-       if(\Auth::attempt($request->validated())){
-            $request->session()->regenerate();
+        if (\Auth::attempt($request->validated())) {
+            session()->regenerate();
+            flash('C возвращением, ' . \Auth::user()->name . '!');
             return redirect(route('main'));
-       }
+        }
 
-       return back()
-           ->withInput($request->only('email'))
-           ->withErrors(['email' => 'Пользователь не найден или введен не верный пароль']);
+        return back()
+            ->withInput($request->only('email'))
+            ->withErrors(['email' => 'Пользователь не найден или введен не верный пароль']);
     }
 
-    public function register(){
+    public function register()
+    {
         return view('user.register');
     }
 
-    public function create(UserRegistrationRequest $request){
+    public function create(UserRegistrationRequest $request)
+    {
         $arr = $request->validated();
         $arr['password'] = \Hash::make($arr['password']);
         $user = User::create($arr);
         \Auth::login($user);
+        flash('Добро пожаловать, ' . $user->name . '!');
+
         return redirect(route('main'));
     }
 
-    public function logout(Request $request){
+    public function logout(Request $request)
+    {
         \Auth::logout();
 
-        $request->session()->invalidate();
+        session()->invalidate();
 
-        $request->session()->regenerateToken();
+        session()->regenerateToken();
+
+        flash('Скорее возвращайтесь!!');
 
         return redirect(route('main'));
     }
 
-    public function show(){
+    public function show(User $user)
+    {
         return redirect(route('main'));
     }
 
-    public function passwordRequest(){
+    public function passwordRequest()
+    {
         return view('user.password-forgot');
     }
 
-    public function passwordEmail(Request $request){
+    public function passwordEmail(Request $request)
+    {
         $request->validate(['email' => 'required|email']);
 
         $status = Password::sendResetLink(
@@ -69,11 +82,13 @@ class UserController extends Controller
             : back()->withErrors(['email' => __($status)]);
     }
 
-    public function passwordReset($token){
+    public function passwordReset($token)
+    {
         return view('user.reset-password', ['token' => $token]);
     }
 
-    public function passwordUpdate(Request $request){
+    public function passwordUpdate(Request $request)
+    {
         $request->validate([
             'token' => 'required',
             'email' => 'required|email',
@@ -92,7 +107,6 @@ class UserController extends Controller
                 event(new PasswordReset($user));
             }
         );
-
         return $status == Password::PASSWORD_RESET
             ? redirect()->route('user.login')->with('status', __($status))
             : back()->withErrors(['email' => [__($status)]]);

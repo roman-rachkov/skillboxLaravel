@@ -4,7 +4,8 @@
 
 @section('content')
 
-    <p class="blog-post-meta">{{$post->user->name}}, {{$post->created_at->toFormattedDateString()}}</p>
+    <p class="blog-post-meta">{{$post->created_at->toFormattedDateString()}} by <a
+            href="{{route('user.show', ['user'=>$post->user->id])}}">{{$post->user->name}}</a></p>
     @include('post.tags', ['tags' => $post->tags])
     <p>{{$post->shortDesc}}</p>
     <p>{{$post->longDesc}}</p>
@@ -20,7 +21,7 @@
             </svg>
             Редактировать
         </a>
-        <form action="{{route('posts.destroy', ['post'=> $post->slug])}}">
+        <form action="{{route('posts.destroy', ['post'=> $post->slug])}}" method="post">
             @csrf
             @method('DELETE')
             <button type="submit" class="btn btn-danger">
