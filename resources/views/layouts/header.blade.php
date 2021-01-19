@@ -17,7 +17,8 @@
                     </svg>
                 </a>
                 @if(Auth::user())
-                    <p class="mb-0">Привет, <a href="{{route('user.show')}}">{{Auth::user()->name}}</a>!</p>
+                    <p class="mb-0">Привет, <a
+                            href="{{route('user.show', ['user'=>Auth::user()->id])}}">{{Auth::user()->name}}</a>!</p>
 
                     <form action="{{route('user.logout')}}" method="post">
                         @csrf
@@ -43,4 +44,8 @@
     @include('layouts.menu')
 
     @yield('promo')
+
+
+    @include('layouts.errors')
+    @include('layouts.success')
 </div>

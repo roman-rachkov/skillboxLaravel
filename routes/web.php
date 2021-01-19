@@ -15,9 +15,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', 'PostsController@index')->name('main');
 
-Route::get('/about', function () {
-    return view('about');
-})->name('about');
+Route::view('/about', 'about')->name('about');
 
 Route::get('/admin', 'FeedbackController@index')->name('admin');
 
@@ -36,7 +34,7 @@ Route::get('/register', 'UserController@register')
     ->middleware('guest')->name('user.register');
 Route::post('/register', 'UserController@create')
     ->middleware('guest')->name('user.create');
-Route::get('/profile', 'UserController@show')->name('user.show');
+Route::get('/profile/{user}', 'UserController@show')->name('user.show');
 Route::post('/logout', 'UserController@logout')
     ->middleware('auth')->name('user.logout');
 

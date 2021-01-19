@@ -4,12 +4,13 @@
 
 @section('content')
 
-    <p class="blog-post-meta">{{$post->user->name}}, {{$post->created_at->toFormattedDateString()}}</p>
+    <p class="blog-post-meta">{{$post->created_at->toFormattedDateString()}} by <a
+            href="{{route('user.show', ['user'=>$post->user->id])}}">{{$post->user->name}}</a></p>
     @include('post.tags', ['tags' => $post->tags])
     <p>{{$post->shortDesc}}</p>
     <p>{{$post->longDesc}}</p>
     <hr>
-    @if($post->user->id === Auth::user()->id)
+    @if(Auth::user() && $post->user->id === Auth::user()->id)
         <a href="{{route('posts.edit', ['post' => $post->slug])}}" class="btn btn-primary">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                  class="bi bi-pencil-square" viewBox="0 0 16 16">
@@ -20,7 +21,7 @@
             </svg>
             Редактировать
         </a>
-        <form action="{{route('posts.destroy', ['post'=> $post->slug])}}">
+        <form action="{{route('posts.destroy', ['post'=> $post->slug])}}" method="post">
             @csrf
             @method('DELETE')
             <button type="submit" class="btn btn-danger">
