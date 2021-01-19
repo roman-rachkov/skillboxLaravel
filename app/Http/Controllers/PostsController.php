@@ -133,11 +133,16 @@ class PostsController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param int $id
+     * @param Post $post
      * @return \Illuminate\Http\Response
+     * @throws \Exception
      */
     public function destroy(Post $post)
     {
-        //
+        if(\Gate::denies('delete-post', $post)){
+            abort(403);
+        }
+        $post->delete();
+        return redirect(route('main'));
     }
 }

@@ -9,7 +9,7 @@
     <p>{{$post->shortDesc}}</p>
     <p>{{$post->longDesc}}</p>
     <hr>
-    @if($post->user->id === Auth::user()->id)
+    @if(Auth::user() && $post->user->id === Auth::user()->id)
         <a href="{{route('posts.edit', ['post' => $post->slug])}}" class="btn btn-primary">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                  class="bi bi-pencil-square" viewBox="0 0 16 16">
