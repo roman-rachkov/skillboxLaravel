@@ -12,10 +12,29 @@ class TagsService
     private Collection $tags;
     private Post $post;
 
-    public function __construct(Post $post,  $tagsString = '')
+    public function __construct()
     {
-        $this->tags = collect(explode(',', $tagsString))->keyBy(fn($item) => $item);
+        $this->setTags();
+    }
+
+    /**
+     * Устанавливает пост для которого нужно обновить теги
+     * @param Post $post
+     * @return $this
+     */
+    public function setPost(Post $post){
         $this->post = $post;
+        return $this;
+    }
+
+    /**
+     * Преаброзует строку тегов в колекуцию и устанавливает в соответвующее поле
+     * @param string $tagsString
+     * @return $this
+     */
+    public function setTags(string $tagsString = ""){
+        $this->tags = collect(explode(',', $tagsString))->keyBy(fn($item) => $item);
+        return $this;
     }
 
     /**

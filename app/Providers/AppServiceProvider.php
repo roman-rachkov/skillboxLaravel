@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Models\Tag;
+use App\Services\TagsService;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\View\View;
 

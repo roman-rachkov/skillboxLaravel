@@ -26,23 +26,4 @@ Route::get('/posts/tags/{tag}', 'TagsController@index')->name('tag');
 
 Route::resource('posts', 'PostsController');
 
-//Route::get('/login', 'UserController@login')
-//    ->middleware('guest')->name('user.login');
-//Route::post('/login', 'UserController@authenticate')
-//    ->middleware('guest')->name('user.auth');
-//Route::get('/register', 'UserController@register')
-//    ->middleware('guest')->name('user.register');
-//Route::post('/register', 'UserController@create')
-//    ->middleware('guest')->name('user.create');
 Route::get('/profile/{user}', 'UserController@show')->name('user.show');
-//Route::post('/logout', 'UserController@logout')
-//    ->middleware('auth')->name('user.logout');
-//
-//Route::get('/forgot-password', 'UserController@passwordRequest')
-//    ->middleware('guest')->name('password.request');
-//Route::post('/forgot-password', 'UserController@passwordEmail')
-//    ->middleware('guest')->name('password.email');
-//Route::get('/reset-password/{token}', 'UserController@passwordReset')
-//    ->middleware('guest')->name('password.reset');
-//Route::post('/reset-password', 'UserController@passwordUpdate')
-//    ->middleware('guest')->name('password.update');

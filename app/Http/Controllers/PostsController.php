@@ -46,10 +46,10 @@ class PostsController extends Controller
      */
     public function store(PostRequest $request)
     {
-        $atributes = $request->validated();
-        $post = \Auth::user()->posts()->create($atributes);
-        if (!empty($atributes['tags'])) {
-            (new TagsService($post, $atributes['tags']))->addTags();
+        $attributes = $request->validated();
+        $post = \Auth::user()->posts()->create($attributes);
+        if (!empty($attributes['tags'])) {
+            app(TagsService::class)->setTags($attributes['tags'])->setPost($post)->addTags();
         }
         return redirect(route('posts.show', ['post' => $post->slug]));
     }
@@ -90,7 +90,7 @@ class PostsController extends Controller
         $attributes = $request->validated();
         $post->update($attributes);
         if (!empty($attributes['tags'])) {
-            (new TagsService($post, $attributes['tags']))->updateTags();
+            app(TagsService::class)->setTags($attributes['tags'])->setPost($post)->updateTags();
         }
         return redirect(route('posts.show', ['post' => $post->slug]));
     }
