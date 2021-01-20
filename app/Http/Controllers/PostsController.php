@@ -2,17 +2,21 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StorePostRequest;
-use App\Http\Requests\UpdatePostRequest;
+use App\Http\Requests\PostRequest;
 use App\Models\Post;
-use App\Models\Tag;
-use App\Rules\English;
+use App\Services\TagsService;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Gate;
 
 class PostsController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth', ['except' => ['index', 'show']]);
+
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -31,29 +35,21 @@ class PostsController extends Controller
      */
     public function create()
     {
-        if (!\Gate::allows('create-post')) {
-            return redirect(route('user.login'));
-        }
-        return view('post.form');
+        return view('post.create');
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param StorePostRequest $request
+     * @param PostRequest $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StorePostRequest $request)
+    public function store(PostRequest $request)
     {
-        if (!\Gate::allows('create-post')) {
-            return redirect(route('user.login'));
-        }
-
-        $post = \Auth::user()->posts()->create($request->validated());
-        $tags = collect(explode(',', $request->get('tags')))->keyBy(fn($item) => $item);
-        foreach ($tags as $tag){
-            $tag = Tag::firstOrCreate(['name' => $tag]);
-            $post->tags()->attach($tag);
+        $atributes = $request->validated();
+        $post = \Auth::user()->posts()->create($atributes);
+        if (!empty($atributes['tags'])) {
+            (new TagsService($post, $atributes['tags']))->addTags();
         }
         return redirect(route('posts.show', ['post' => $post->slug]));
     }
@@ -77,10 +73,8 @@ class PostsController extends Controller
      */
     public function edit(Post $post)
     {
-        if(!\Gate::allows('update-post', $post)){
-            abort(403);
-        }
-        return view('post.form', ['post' => $post]);
+        Gate::authorize('update', $post);
+        return view('post.edit')->with('post', $post);
     }
 
     /**
@@ -90,44 +84,15 @@ class PostsController extends Controller
      * @param Post $post
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Post $post)
+    public function update(PostRequest $request, Post $post)
     {
-        if(!\Gate::allows('update-post', $post)){
-            abort(403);
-        }
-        $validator = Validator::make($request->all(), [
-            'slug' => [
-                'required',
-                Rule::unique('posts')->ignore($post->id),
-                'max:150',
-                new English
-            ],
-            'name' => 'required|max:100|min:5',
-            'shortDesc' => 'required|max:250',
-            'longDesc' => 'required',
-            'published' => '',
-            'tags' => ''
-        ]);
-
-        if($validator->fails()){
-            return back()->withErrors($validator)->withInput();
-        }
-
-        $attributes = $request->all();
+        Gate::authorize('update', $post);
+        $attributes = $request->validated();
         $post->update($attributes);
-
-        $postTags = $post->tags->keyBy('name');
-
-        $tags = collect(explode(',', $attributes['tags']))->keyBy(fn($item) => $item);
-        $ids = $postTags->intersectByKeys($tags)->pluck('id')->toArray();
-        $tagsToAttach = $tags->diffKeys($postTags);
-        foreach ($tagsToAttach as $tag){
-            $tag = Tag::firstOrCreate(['name' => $tag]);
-            $ids[] = $tag->id;
+        if (!empty($attributes['tags'])) {
+            (new TagsService($post, $attributes['tags']))->updateTags();
         }
-        $post->tags()->sync($ids);
-
-        return redirect(route('posts.show', ['post'=> $post->slug]));
+        return redirect(route('posts.show', ['post' => $post->slug]));
     }
 
     /**
@@ -139,9 +104,8 @@ class PostsController extends Controller
      */
     public function destroy(Post $post)
     {
-        if(\Gate::denies('delete-post', $post)){
-            abort(403);
-        }
+        Gate::authorize('delete', $post);
+
         $post->delete();
         return redirect(route('main'));
     }

@@ -46,7 +46,7 @@
             </div>
             @enderror
         </div>
-        <input type="hidden" value="{{$token}}" name="token">
+        <input type="hidden" value="{{request()->route('token')}}" name="token">
         <button type="submit" class="btn btn-primary">Обновить пароль</button>
     </form>
 @endsection

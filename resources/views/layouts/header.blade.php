@@ -20,7 +20,7 @@
                     <p class="mb-0">Привет, <a
                             href="{{route('user.show', ['user'=>Auth::user()->id])}}">{{Auth::user()->name}}</a>!</p>
 
-                    <form action="{{route('user.logout')}}" method="post">
+                    <form action="{{route('logout')}}" method="post">
                         @csrf
                         <button type="submit" class="btn">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
@@ -34,8 +34,8 @@
                     </form>
 
                 @else
-                    <a class="btn btn-sm btn-outline-secondary me-1" href="{{route('user.login')}}">Войти</a>
-                    <a class="btn btn-sm btn-outline-secondary" href="{{route('user.register')}}">Регистрация</a>
+                    <a class="btn btn-sm btn-outline-secondary me-1" href="{{route('login')}}">Войти</a>
+                    <a class="btn btn-sm btn-outline-secondary" href="{{route('register')}}">Регистрация</a>
                 @endif
             </div>
         </div>

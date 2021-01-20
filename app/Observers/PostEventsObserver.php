@@ -10,6 +10,13 @@ use App\Notifications\PostUpdatedNotification;
 
 class PostEventsObserver
 {
+    protected string $adminEmail;
+
+    public function __construct()
+    {
+        $this->adminEmail = config('skillbox.admin_email', '');
+    }
+
     /**
      * Handle the Post "created" event.
      *
@@ -18,7 +25,7 @@ class PostEventsObserver
      */
     public function created(Post $post)
     {
-        User::where('email', config('skillbox.admin_email'))->first()->notify(new PostCreatedNotification($post));
+        User::where('email', $this->adminEmail)->first()->notify(new PostCreatedNotification($post));
         flash('Статья "' . $post->name . '" успешно создна.');
     }
 
@@ -30,7 +37,7 @@ class PostEventsObserver
      */
     public function updated(Post $post)
     {
-        User::where('email', config('skillbox.admin_email'))->first()->notify(new PostUpdatedNotification($post));
+        User::where('email', $this->adminEmail)->first()->notify(new PostUpdatedNotification($post));
         flash('Статья "' . $post->name . '" успешно обновлена.');
 
     }
@@ -43,7 +50,7 @@ class PostEventsObserver
      */
     public function deleted(Post $post)
     {
-        User::where('email', config('skillbox.admin_email'))->first()->notify(new PostDeletedNotification($post));
+        User::where('email', $this->adminEmail)->first()->notify(new PostDeletedNotification($post));
         flash('Статья "' . $post->name . '" успешно удалена.');
     }
 

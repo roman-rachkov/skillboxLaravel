@@ -4,7 +4,7 @@
 
 @section('content')
 
-    <form action="{{route('user.create')}}" method="post">
+    <form action="/register" method="post">
         @csrf
         <div class="mb-3">
             <label for="name" class="form-label">Имя</label>

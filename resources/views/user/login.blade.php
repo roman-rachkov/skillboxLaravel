@@ -4,7 +4,7 @@
 
 @section('content')
 
-        <form action="{{route('user.auth')}}" method="post">
+        <form action="/login" method="post">
             @csrf
             <div class="mb-3">
                 <label for="email" class="form-label">E-mail</label>
