@@ -12,9 +12,10 @@ class TagsService
     private Collection $tags;
     private Post $post;
 
-    public function __construct()
+    public function __construct(Post $post, string $tagsString)
     {
-        $this->setTags();
+        $this->setTags($tagsString);
+        $this->setPost($post);
     }
 
     /**
