@@ -1,11 +1,11 @@
 @extends('layouts.master')
 
 @section('page')
-    @include('layouts.admin-header')
+    @include('layouts.header')
 
     <main role="main" class="container">
         <div class="row">
-            <div class="col-md-8 blog-main">
+            <div class="col-md-12 blog-main">
                 <h3 class="pb-3 mb-4 font-italic border-bottom">
                     @yield('title')
                 </h3>
@@ -16,7 +16,7 @@
 
             </div>
 
-            @include('layouts.sidebar')
+{{--            @include('layouts.sidebar')--}}
         </div><!-- /.row -->
     </main><!-- /.container -->
 

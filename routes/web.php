@@ -12,17 +12,18 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('/', 'App\Http\Controllers\PostController@index')->name('main');
 
-Route::get('/about', function () {
-    return view('about');
-})->name('about');
+Route::get('/', 'PostsController@index')->name('main');
 
-Route::get('/admin', 'App\Http\Controllers\FeedbackController@index')->name('admin');
+Route::view('/about', 'about')->name('about');
 
-Route::get('/contacts', 'App\Http\Controllers\FeedbackController@show')->name('contacts');
-Route::post('/contacts', 'App\Http\Controllers\FeedbackController@store')->name('Store message');
+Route::get('/admin', 'FeedbackController@index')->name('admin');
 
-Route::post('/posts', 'App\Http\Controllers\PostController@store')->name('Store Post');
-Route::get('/posts/create', 'App\Http\Controllers\PostController@create')->name('New Post');
-Route::get('/posts/{slug}', 'App\Http\Controllers\PostController@show')->name('View Post');
+Route::get('/contacts', 'FeedbackController@show')->name('contacts');
+Route::post('/contacts', 'FeedbackController@store')->name('Store message');
+
+Route::get('/posts/tags/{tag}', 'TagsController@index')->name('tag');
+
+Route::resource('posts', 'PostsController');
+
+Route::get('/profile/{user}', 'UserController@show')->name('user.show');

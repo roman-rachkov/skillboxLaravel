@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Post extends Model
 {
     use HasFactory;
+
     protected $fillable = ['slug', 'name', 'shortDesc', 'longDesc', 'published'];
 
     public function getRouteKeyName()
@@ -17,6 +18,14 @@ class Post extends Model
 
     public function scopePublished($query){
         return $query->where('published', true);
+    }
+
+    public function tags(){
+        return $this->belongsToMany(Tag::class);
+    }
+
+    public function user(){
+        return $this->belongsTo(User::class);
     }
 
 }

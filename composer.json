@@ -8,21 +8,23 @@
     ],
     "license": "MIT",
     "require": {
-        "php": "^7.3|^8.0",
-        "fideloper/proxy": "^4.4",
-        "fruitcake/laravel-cors": "^2.0",
-        "guzzlehttp/guzzle": "^7.0.1",
-        "laravel/framework": "^8.12",
+        "php": "8.0",
+        "fideloper/proxy": "^4.4.1",
+        "fruitcake/laravel-cors": "^2.0.3",
+        "guzzlehttp/guzzle": "^7.2.0",
+        "laravel/fortify": "^1.7",
+        "laravel/framework": "^8.22.1",
+        "laravel/telescope": "^4.4",
         "laravel/tinker": "^2.5"
     },
     "require-dev": {
-        "barryvdh/laravel-ide-helper": "^2.8",
-        "facade/ignition": "^2.5",
-        "fakerphp/faker": "^1.9.1",
+        "barryvdh/laravel-ide-helper": "^2.9",
+        "facade/ignition": "^2.5.8",
+        "fakerphp/faker": "^1.13.0",
         "laravel/sail": "^0.0.5",
         "mockery/mockery": "^1.4.2",
-        "nunomaduro/collision": "^5.0",
-        "phpunit/phpunit": "^9.3.3"
+        "nunomaduro/collision": "^5.2.0",
+        "phpunit/phpunit": "^9.5.1"
     },
     "config": {
         "optimize-autoloader": true,
@@ -39,7 +41,10 @@
             "App\\": "app/",
             "Database\\Factories\\": "database/factories/",
             "Database\\Seeders\\": "database/seeders/"
-        }
+        },
+        "files": [
+            "app/helpers.php"
+        ]
     },
     "autoload-dev": {
         "psr-4": {
