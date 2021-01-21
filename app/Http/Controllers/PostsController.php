@@ -42,14 +42,15 @@ class PostsController extends Controller
      * Store a newly created resource in storage.
      *
      * @param PostRequest $request
+     * @param TagsService $tagsService
      * @return \Illuminate\Http\Response
      */
-    public function store(PostRequest $request)
+    public function store(PostRequest $request, TagsService $tagsService)
     {
         $attributes = $request->validated();
         $post = \Auth::user()->posts()->create($attributes);
         if (!empty($attributes['tags'])) {
-            app(TagsService::class)->setTags($attributes['tags'])->setPost($post)->addTags();
+            $tagsService->setTags($attributes['tags'])->setPost($post)->addTags();
         }
         return redirect(route('posts.show', ['post' => $post->slug]));
     }
@@ -80,17 +81,19 @@ class PostsController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param Request $request
+     * @param PostRequest $request
      * @param Post $post
+     * @param TagsService $tagsService
      * @return \Illuminate\Http\Response
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
-    public function update(PostRequest $request, Post $post)
+    public function update(PostRequest $request, Post $post, TagsService $tagsService)
     {
         Gate::authorize('update', $post);
         $attributes = $request->validated();
         $post->update($attributes);
         if (!empty($attributes['tags'])) {
-            app(TagsService::class)->setTags($attributes['tags'])->setPost($post)->updateTags();
+            $tagsService->setTags($attributes['tags'])->setPost($post)->updateTags();
         }
         return redirect(route('posts.show', ['post' => $post->slug]));
     }
