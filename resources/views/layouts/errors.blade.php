@@ -1,12 +1,12 @@
 @if($errors->count())
-    <x-alert>
-        <x-slot name="title">
-            Ошибки:
-        </x-slot>
-        <ul>
-            @foreach($errors->all() as $error)
-                <li>{{$error}}</li>
-            @endforeach
-        </ul>
-    </x-alert>
+    @alert
+    @slot('title')
+        Ошибки:
+    @endslot
+    <ul>
+        @foreach($errors->all() as $error)
+            <li>{{$error}}</li>
+        @endforeach
+    </ul>
+    @endalert
 @endif
