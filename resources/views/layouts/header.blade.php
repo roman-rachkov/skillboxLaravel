@@ -16,7 +16,7 @@
                         <line x1="21" y1="21" x2="15.8" y2="15.8"></line>
                     </svg>
                 </a>
-                @if(Auth::user())
+                @auth
                     <p class="mb-0">Привет, <a
                             href="{{route('user.show', ['user'=>Auth::user()->id])}}">{{Auth::user()->name}}</a>!</p>
 
@@ -32,7 +32,6 @@
                             </svg>
                         </button>
                     </form>
-
                 @else
                     <a class="btn btn-sm btn-outline-secondary me-1" href="{{route('login')}}">Войти</a>
                     <a class="btn btn-sm btn-outline-secondary" href="{{route('register')}}">Регистрация</a>

@@ -50,6 +50,8 @@
 
 @section('content')
 
+
+
     @foreach($posts as $post)
         @include('post.single')
     @endforeach

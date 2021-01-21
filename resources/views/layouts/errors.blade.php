@@ -1,9 +1,12 @@
 @if($errors->count())
-    <div class="alert alert-danger">
+    <x-alert>
+        <x-slot name="title">
+            Ошибки:
+        </x-slot>
         <ul>
             @foreach($errors->all() as $error)
                 <li>{{$error}}</li>
             @endforeach
         </ul>
-    </div>
+    </x-alert>
 @endif

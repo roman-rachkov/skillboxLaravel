@@ -1,5 +1,8 @@
 @if(session()->has('message'))
-    <div class="alert alert-{{session('message_type')}}">
+    <x-alert>
+        <x-slot name="type">
+            {{session('message_type')}}
+        </x-slot>
         {{session('message')}}
-    </div>
+    </x-alert>
 @endif
