@@ -5,8 +5,10 @@
         <a class="p-2 text-muted" href="{{route('contacts')}}">Контакты</a>
         @auth
             <a class="p-2 text-muted" href="{{route('posts.create')}}">Новая статья</a>
-            <a class="p-2 text-muted" href="{{route('admin')}}">Административный раздел</a>
         @endauth
+        @admin
+            <a class="p-2 text-muted" href="{{route('admin.main')}}">Административный раздел</a>
+        @endadmin
     </nav>
 </div>
 <hr>

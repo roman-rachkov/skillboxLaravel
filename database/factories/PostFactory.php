@@ -26,7 +26,7 @@ class PostFactory extends Factory
         return [
             'name' => $this->faker->sentence,
             'slug' => $this->faker->unique()->word,
-            'shot_desc' => $this->faker->text(200),
+            'short_desc' => $this->faker->text(200),
             'long_desc' => $this->faker->text(800),
             'published' => $this->faker->boolean(70),
             'created_at' => Carbon::now()->subDays(rand(0,365))

@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
-use App\Http\Requests\StoreFeedbackRequest;
-use App\Models\Feedback;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\PostRequest;
+use App\Models\Post;
 use Illuminate\Http\Request;
 
-class FeedbackController extends Controller
+class PostsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,8 +16,8 @@ class FeedbackController extends Controller
      */
     public function index()
     {
-        return view('admin.feedback.show')
-            ->with('feedbacks', Feedback::latest()->paginate());
+        $posts = Post::with('user')->latest()->paginate();
+        return view('admin.post.index', compact('posts'));
     }
 
     /**
@@ -32,57 +33,55 @@ class FeedbackController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param StoreFeedbackRequest $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreFeedbackRequest $request)
+    public function store(Request $request)
     {
-        $feedback = Feedback::create($request->validated());
-        return redirect(route('main'));
-
+        //
     }
 
     /**
      * Display the specified resource.
      *
-     * @param int $id
+     * @param \App\Models\Post $post
      * @return \Illuminate\Http\Response
      */
-    public function show()
+    public function show(Post $post)
     {
-        return view('contacts.show');
+        //
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param int $id
+     * @param \App\Models\Post $post
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Post $post)
     {
-        //
+        return view('admin.post.edit', compact('post'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param \Illuminate\Http\Request $request
-     * @param int $id
+     * @param \App\Models\Post $post
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(PostRequest $request, Post $post)
     {
-        //
+        return app(\App\Http\Controllers\PostsController::class)->update($request, $post);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param int $id
+     * @param \App\Models\Post $post
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Post $post)
     {
         //
     }

@@ -8,7 +8,7 @@
                placeholder="statiya_o_dojde"
                aria-describedby="slug-help post-slug-validation-feedback"
                required
-               value="{{old('slug', $post->slug)}}"
+               value="{{old('slug', $post)}}"
         >
         @error('slug')
         <div id="post-slug-validation-feedback" class="invalid-feedback">
@@ -45,11 +45,11 @@
 </div>
 <div class="mb-3">
     <label for="short-desc" class="form-label">Краткое описание статьи</label>
-    <textarea class="form-control @error('shot_desc') is-invalid @enderror" id="short-desc" rows="3"
+    <textarea class="form-control @error('short_desc') is-invalid @enderror" id="short-desc" rows="3"
               maxlength="250" required
               aria-describedby="post-short-desc-validation-feedback"
-              name="shot_desc">{{old('shot_desc', $post->shot_desc)}}</textarea>
-    @error('shot_desc')
+              name="short_desc">{{old('short_desc', $post->short_desc)}}</textarea>
+    @error('short_desc')
     <div id="post-short-desc-validation-feedback" class="invalid-feedback">
         {{$message}}
     </div>

@@ -1,6 +1,6 @@
 @extends('layouts.front')
 
-@section('title', 'Главная')
+@section('title', $title ?? 'Главная')
 
 @section('promo')
     <div class="jumbotron p-3 p-md-5 text-white rounded bg-dark">

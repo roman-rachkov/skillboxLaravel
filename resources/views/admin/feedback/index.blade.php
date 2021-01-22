@@ -14,9 +14,7 @@
         </tr>
         </thead>
         <tbody>
-        @foreach($feedbacks as $feedback)
-        @include('admin.feedback.single')
-        @endforeach
+        @each('admin.feedback.single', $feedbacks, 'feedback')
         </tbody>
     </table>
 

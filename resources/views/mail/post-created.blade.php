@@ -1,9 +1,9 @@
 @component('mail::message')
     # Создана новая статья: {{$post->name}}
 
-    {{$post->shot_desc}}
+    {{$post->short_desc}}
 
-    @component('mail::button', ['url' => route('posts.show', ['post' => $post->slug])])
+    @component('mail::button', ['url' => route('posts.show', ['post' => $post])])
         Смотреть на сайте
     @endcomponent
 

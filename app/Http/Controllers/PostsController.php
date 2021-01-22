@@ -52,7 +52,7 @@ class PostsController extends Controller
         if (!empty($attributes['tags'])) {
             app()->make(TagsService::class, ['post' => $post, 'tagsString' => $attributes['tags']])->addTags();
         }
-        return redirect(route('posts.show', ['post' => $post->slug]));
+        return redirect(route('posts.show', ['post' => $post]));
     }
 
     /**
@@ -95,7 +95,7 @@ class PostsController extends Controller
         if (!empty($attributes['tags'])) {
             app()->make(TagsService::class, ['post' => $post, 'tagsString' => $attributes['tags']])->updateTags();
         }
-        return redirect(route('posts.show', ['post' => $post->slug]));
+        return redirect(route('posts.show', ['post' => $post]));
     }
 
     /**
