@@ -32,7 +32,7 @@
 <script src="/js/maxlength.min.js"></script>
 <script src="/js/jquery.liTranslit.js"></script>
 <script src="/js/app.js"></script>
-@yield('scripts')
+@stack('scripts')
 <script>
     Holder.addTheme('thumb', {
         bg: '#55595c',

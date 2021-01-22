@@ -45,11 +45,11 @@
 </div>
 <div class="mb-3">
     <label for="short-desc" class="form-label">Краткое описание статьи</label>
-    <textarea class="form-control @error('shortDesc') is-invalid @enderror" id="short-desc" rows="3"
+    <textarea class="form-control @error('shot_desc') is-invalid @enderror" id="short-desc" rows="3"
               maxlength="250" required
               aria-describedby="post-short-desc-validation-feedback"
-              name="shortDesc">{{old('shortDesc', $post->shortDesc)}}</textarea>
-    @error('shortDesc')
+              name="shot_desc">{{old('shot_desc', $post->shot_desc)}}</textarea>
+    @error('shot_desc')
     <div id="post-short-desc-validation-feedback" class="invalid-feedback">
         {{$message}}
     </div>
@@ -57,10 +57,10 @@
 </div>
 <div class="mb-3">
     <label for="long-desc" class="form-label">Детальное описание статьи</label>
-    <textarea class="form-control @error('longDesc') is-invalid @enderror" id="long-desc" rows="10" required
+    <textarea class="form-control @error('long_desc') is-invalid @enderror" id="long-desc" rows="10" required
               aria-describedby="post-long-desc-validation-feedback"
-              name="longDesc">{{old('longDesc', $post->longDesc)}}</textarea>
-    @error('longDesc')
+              name="long_desc">{{old('long_desc', $post->long_desc)}}</textarea>
+    @error('long_desc')
     <div id="post-long-desc-validation-feedback" class="invalid-feedback">
         {{$message}}
     </div>
@@ -77,7 +77,7 @@
 </div>
 <button type="submit" class="btn btn-primary">Сохранить</button>
 
-@section('scripts')
+@push('scripts')
     <script>
         $(document).ready(function () {
             const postNameField = $('#post-name');
@@ -90,4 +90,4 @@
             })
         });
     </script>
-@endsection
+@endpush

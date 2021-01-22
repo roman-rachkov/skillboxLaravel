@@ -4,7 +4,7 @@
     <p class="blog-post-meta">{{$post->created_at->toFormattedDateString()}} by <a
             href="{{route('user.show', ['user'=>$post->user->id])}}">{{$post->user->name}}</a></p>
     @include('post.tags', ['tags'=>$post->tags])
-    <p>{{$post->shortDesc}}</p>
+    <p>{{$post->shot_desc}}</p>
     <a href="{{route('posts.show', ['post' => $post->slug])}}">Читать даллее</a>
     <hr>
 

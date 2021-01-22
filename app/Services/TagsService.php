@@ -23,7 +23,8 @@ class TagsService
      * @param Post $post
      * @return $this
      */
-    public function setPost(Post $post){
+    public function setPost(Post $post)
+    {
         $this->post = $post;
         return $this;
     }
@@ -33,7 +34,8 @@ class TagsService
      * @param string $tagsString
      * @return $this
      */
-    public function setTags(string $tagsString = ""){
+    public function setTags(string $tagsString = "")
+    {
         $this->tags = collect(explode(',', $tagsString))->keyBy(fn($item) => $item);
         return $this;
     }

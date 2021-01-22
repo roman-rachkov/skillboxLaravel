@@ -17,8 +17,8 @@ class CreatePostsTable extends Migration
             $table->id();
             $table->string('slug', '150')->unique();
             $table->string('name', '100');
-            $table->string('shortDesc', 255);
-            $table->text('longDesc');
+            $table->string('shot_desc', 255);
+            $table->text('long_desc');
             $table->boolean('published')->default(false);
             $table->unsignedBigInteger('user_id');
             $table->timestamps();

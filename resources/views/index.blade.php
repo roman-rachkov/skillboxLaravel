@@ -50,11 +50,7 @@
 
 @section('content')
 
-
-
-    @foreach($posts as $post)
-        @include('post.single')
-    @endforeach
+    @each('post.single', $posts, 'post')
 
     {{$posts->links('layouts.pagination')}}
 @endsection

@@ -7,8 +7,8 @@
     <p class="blog-post-meta">{{$post->created_at->toFormattedDateString()}} by <a
             href="{{route('user.show', ['user'=>$post->user->id])}}">{{$post->user->name}}</a></p>
     @include('post.tags', ['tags' => $post->tags])
-    <p>{{$post->shortDesc}}</p>
-    <p>{{$post->longDesc}}</p>
+    <p>{{$post->shot_desc}}</p>
+    <p>{{$post->long_desc}}</p>
     <hr>
     @if(Auth::user() && $post->user->id === Auth::user()->id)
         <a href="{{route('posts.edit', ['post' => $post->slug])}}" class="btn btn-primary">

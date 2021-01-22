@@ -30,7 +30,6 @@ class AppServiceProvider extends ServiceProvider
         view()->composer('layouts.sidebar', function (View $view){
             $view->with('tagsCloud', Tag::tagsCloud());
         });
-//        \Blade::component(Alert::class, 'alert');
         \Blade::aliasComponent('layouts.components.alert', 'alert');
     }
 }
