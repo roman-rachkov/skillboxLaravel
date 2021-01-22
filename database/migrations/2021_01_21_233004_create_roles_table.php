@@ -1,5 +1,6 @@
 <?php
 
+use Carbon\Carbon;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -19,9 +20,24 @@ class CreateRolesTable extends Migration
             $table->string('key')->unique();
             $table->timestamps();
         });
-        DB::table('roles')->insert(['name'=>'Администратор', 'key'=>'admin']);
-        DB::table('roles')->insert(['name'=>'Модератор', 'key'=>'moder']);
-        DB::table('roles')->insert(['name'=>'Пользователь', 'key'=>'user']);
+        DB::table('roles')->insert([
+            'name'=>'Администратор',
+            'key'=>'admin',
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now()
+        ]);
+        DB::table('roles')->insert([
+            'name'=>'Модератор',
+            'key'=>'moder',
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now()
+        ]);
+        DB::table('roles')->insert([
+            'name'=>'Пользователь',
+            'key'=>'user',
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now()
+        ]);
     }
 
     /**
