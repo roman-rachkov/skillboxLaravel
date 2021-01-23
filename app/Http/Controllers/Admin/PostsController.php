@@ -46,9 +46,9 @@ class PostsController extends MainPostsController
      */
     public function update(Request $request, Post $post)
     {
-        if($request->has('slug')){
+        if ($request->has('slug')) {
             $postRequest = app(PostRequest::class)->replace($request->all());
-            return  parent::update($postRequest, $post);
+            return parent::update($postRequest, $post);
         }
         $post->published = $request->has('published');
         $post->save();

@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Notifications\PostCreatedNotification;
 use App\Notifications\PostDeletedNotification;
 use App\Notifications\PostUpdatedNotification;
+use App\Services\PushAllService;
 
 class PostEventsObserver
 {
@@ -27,6 +28,9 @@ class PostEventsObserver
     {
         User::where('email', $this->adminEmail)->first()->notify(new PostCreatedNotification($post));
         flash('Статья "' . $post->name . '" успешно создна.');
+        app(PushAllService::class)
+            ->sendMessage('Новая статья: ' . $post->name, url: route('posts.show', ['post' => $post]))
+            ->getBody();
     }
 
     /**
