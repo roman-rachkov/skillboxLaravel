@@ -2,13 +2,19 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
+
+use App\Http\Controllers\PostsController as MainPostsController;
 use App\Http\Requests\PostRequest;
 use App\Models\Post;
 use Illuminate\Http\Request;
 
-class PostsController extends Controller
+class PostsController extends MainPostsController
 {
+
+    public function __construct()
+    {
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -18,38 +24,6 @@ class PostsController extends Controller
     {
         $posts = Post::with('user')->latest()->paginate();
         return view('admin.post.index', compact('posts'));
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param \App\Models\Post $post
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Post $post)
-    {
-        //
     }
 
     /**
@@ -70,19 +44,16 @@ class PostsController extends Controller
      * @param \App\Models\Post $post
      * @return \Illuminate\Http\Response
      */
-    public function update(PostRequest $request, Post $post)
+    public function update(Request $request, Post $post)
     {
-        return app(\App\Http\Controllers\PostsController::class)->update($request, $post);
+        if($request->has('slug')){
+            $postRequest = app(PostRequest::class)->replace($request->all());
+            return  parent::update($postRequest, $post);
+        }
+        $post->published = $request->has('published');
+        $post->save();
+        flash('Состояние публикации изменено');
+        return back();
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param \App\Models\Post $post
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Post $post)
-    {
-        //
-    }
 }

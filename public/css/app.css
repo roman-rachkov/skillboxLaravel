@@ -128,3 +128,54 @@ h1, h2, h3, h4, h5, h6 {
 .blog-footer p:last-child {
     margin-bottom: 0;
 }
+
+/*------------------------------------------------*/
+
+.ftable{
+    display: flex;
+    flex-direction: column;
+}
+
+.ftable__row{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    border-bottom: 1px solid #000;
+}
+
+.ftable__row:hover {
+    background-color: #eee;
+}
+
+.ftable__row.header {
+    border: 1px solid #000;
+}
+.ftable__column{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.ftable__column_first, .ftable__column_second, .ftable__column_third, .ftable__column_fourth, .ftable__column_fifth {
+    width: 30px;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    vertical-align: middle;
+    height: 100%;
+}
+.ftable__column_second{
+    width: 250px;
+}
+.ftable__column_third{
+    width: 700px;
+}
+
+.ftable__column_fourth{
+    width: 150px;
+}
+.ftable__column_fifth{
+    width: 100px;
+}
