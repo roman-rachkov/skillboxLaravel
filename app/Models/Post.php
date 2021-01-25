@@ -9,22 +9,25 @@ class Post extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['slug', 'name', 'shortDesc', 'longDesc', 'published'];
+    protected $fillable = ['slug', 'name', 'short_desc', 'long_desc', 'published'];
 
     public function getRouteKeyName()
     {
         return 'slug';
     }
 
-    public function scopePublished($query){
+    public function scopePublished($query)
+    {
         return $query->where('published', true);
     }
 
-    public function tags(){
+    public function tags()
+    {
         return $this->belongsToMany(Tag::class);
     }
 
-    public function user(){
+    public function user()
+    {
         return $this->belongsTo(User::class);
     }
 

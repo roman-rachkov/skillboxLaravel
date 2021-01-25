@@ -14,13 +14,16 @@ class Tag extends Model
     {
         return 'name';
     }
+
     protected $fillable = ['name'];
 
-    public function posts(){
+    public function posts()
+    {
         return $this->belongsToMany(Post::class);
     }
 
-    public static function tagsCloud(){
+    public static function tagsCloud()
+    {
         return self::has('posts')->get();
     }
 

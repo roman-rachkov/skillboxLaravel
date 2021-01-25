@@ -19,7 +19,7 @@ class PostPolicy
      */
     protected function baseAccess(User $user, Post $post): bool
     {
-        return $user->id === $post->user_id;
+        return ($user->id === $post->user_id || $user->isAdmin());
     }
 
     /**
