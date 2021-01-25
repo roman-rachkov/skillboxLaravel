@@ -29,7 +29,8 @@ class PostFactory extends Factory
             'short_desc' => $this->faker->text(200),
             'long_desc' => $this->faker->text(800),
             'published' => $this->faker->boolean(70),
-            'created_at' => Carbon::now()->subDays(rand(0,365))
+            'created_at' => Carbon::now()->subDays(rand(0, 365)),
+            'user_id' => User::factory()
         ];
     }
 }

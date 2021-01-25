@@ -20,13 +20,12 @@ class PostSeeder extends Seeder
     {
         $tags = Tag::all()->pluck('id')->toArray();
 
-        Post::factory(rand(30, 90))
-            ->state(new Sequence(
+        Post::factory(rand(10, 30))
+            ->create(new Sequence(
                 ['user_id' => 1],
                 ['user_id' => 2],
                 ['user_id' => 3],
             ))
-            ->create()
             ->each(function (Post $post) use ($tags) {
                 $randomTagsIds = Arr::random($tags, rand(1, 5));
                 $post->tags()->sync($randomTagsIds);
