@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-use App\Models\Post;
+use App\Models\AbstaractArticle;
 use App\Models\Tag;
 use Illuminate\Support\Collection;
 
@@ -10,9 +10,9 @@ class TagsService
 {
 
     private Collection $tags;
-    private Post $post;
+    private AbstaractArticle $post;
 
-    public function __construct(Post $post, string $tagsString)
+    public function __construct(AbstaractArticle $post, string $tagsString)
     {
         $this->setTags($tagsString);
         $this->setPost($post);
@@ -23,7 +23,7 @@ class TagsService
      * @param Post $post
      * @return $this
      */
-    public function setPost(Post $post)
+    public function setPost(AbstaractArticle $post)
     {
         $this->post = $post;
         return $this;

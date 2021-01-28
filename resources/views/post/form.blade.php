@@ -22,7 +22,7 @@
     <input type="text" class="form-control @error('name') is-invalid @enderror" id="post-name"
            placeholder="Статья о дожде" name="name"
            aria-describedby="post-name-validation-feedback"
-           required maxlength="100" minlength="5" value="{{old('name', $post->name)}}"
+           required maxlength="100" minlength="5" value="{{old('name', $post->title)}}"
     >
     @error('name')
     <div id="post-name-validation-feedback" class="invalid-feedback">

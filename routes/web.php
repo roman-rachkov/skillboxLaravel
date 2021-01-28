@@ -15,6 +15,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', 'PostsController@index')->name('main');
 
+Route::get('news', 'NewsController@index')->name('news');
+
 Route::view('/about', 'about')->name('about');
 
 Route::get('/contacts', 'FeedbacksController@show')->name('contacts');
@@ -29,5 +31,5 @@ Route::get('/profile/{user}', 'UserController@show')->name('user.show');
 Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/', 'Admin\PostsController@index')->name('main');
     Route::resource('posts', 'Admin\PostsController');
-    Route::get('/feedback', 'Admin\FeedbacksController@index')->name('feedback');
+    Route::get('feedback', 'Admin\FeedbacksController@index')->name('feedback');
 });

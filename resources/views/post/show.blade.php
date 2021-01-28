@@ -1,6 +1,6 @@
 @extends('layouts.front')
 
-@section('title', $post->name)
+@section('title', $post->title)
 
 @section('content')
 

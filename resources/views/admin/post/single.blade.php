@@ -1,6 +1,6 @@
 <div class="ftable__row">
     <div class="ftable__column ftable__column_first">{{$post->id}}</div>
-    <div class="ftable__column ftable__column_second">{{$post->name}}</div>
+    <div class="ftable__column ftable__column_second">{{$post->title}}</div>
     <div class="ftable__column ftable__column_third">{{$post->short_desc}}</div>
     <div class="ftable__column ftable__column_fourth">{{$post->created_at}}</div>
     <div class="ftable__column ftable__column_fifth">

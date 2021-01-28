@@ -1,5 +1,5 @@
 @component('mail::message')
-    # Cтатья "{{$post->name}}" Была удалена
+    # Cтатья "{{$post->title}}" Была удалена
 
     {{$post->short_desc}}
 

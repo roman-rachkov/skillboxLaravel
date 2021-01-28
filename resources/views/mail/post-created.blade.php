@@ -1,5 +1,5 @@
 @component('mail::message')
-    # Создана новая статья: {{$post->name}}
+    # Создана новая статья: {{$post->title}}
 
     {{$post->short_desc}}
 
