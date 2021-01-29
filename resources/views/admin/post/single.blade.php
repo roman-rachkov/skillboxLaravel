@@ -7,7 +7,10 @@
         <form action="{{route('admin.posts.update',['post'=>$post])}}" method="post">
             @csrf
             @method('PATCH')
-            <a href="{{route('admin.posts.edit', ['post'=>$post])}}">
+            <a href="{{route('admin.posts.edit', ['post'=>$post])}}" style="text-decoration: none"
+               data-bs-toggle="tooltip"
+               data-bs-placement="top"
+               title="Редактировать">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil"
                      viewBox="0 0 16 16">
                     <path

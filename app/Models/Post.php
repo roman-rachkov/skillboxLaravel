@@ -7,5 +7,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class Post extends AbstaractArticle
 {
-
+    public string $type = 'post';
 }

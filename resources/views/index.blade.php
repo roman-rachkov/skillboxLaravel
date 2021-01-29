@@ -50,7 +50,12 @@
 
 @section('content')
 
-    @each('post.single', $posts, 'post')
-
+    @foreach($posts as $post)
+        @if($post->type === 'post')
+            @include('post.single')
+        @else
+            @include('news.single')
+        @endif
+    @endforeach
     {{$posts->links('layouts.pagination')}}
 @endsection

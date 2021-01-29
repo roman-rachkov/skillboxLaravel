@@ -9,7 +9,12 @@ abstract class AbstaractArticle extends Model
 {
     use HasFactory;
 
+    protected string $type = 'post';
+
     protected $fillable = ['slug', 'name', 'short_desc', 'long_desc', 'published'];
+    protected $appends = [
+        'type'
+    ];
 
     public function getRouteKeyName()
     {
@@ -29,6 +34,10 @@ abstract class AbstaractArticle extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function getTypeAttribute(){
+        return $this->type;
     }
 
 }

@@ -8,4 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class News extends AbstaractArticle
 {
 
+    public string $type = 'news';
+
 }

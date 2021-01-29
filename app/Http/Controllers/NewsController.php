@@ -14,7 +14,8 @@ class NewsController extends Controller
     public function index()
     {
         $posts = News::with('tags')->with('user')->published()->latest()->paginate();
-        return view('index', compact('posts'));
+        $title = 'Новости';
+        return view('index', compact('posts', 'title'));
     }
 
     /**
