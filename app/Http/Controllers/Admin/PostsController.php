@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Admin;
 
-
 use App\Http\Controllers\PostsController as MainPostsController;
 use App\Http\Requests\PostRequest;
 use App\Models\Post;

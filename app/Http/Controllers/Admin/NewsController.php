@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\NewsRequest;
+use \App\Http\Controllers\Controller;
 use App\Models\News;
 use App\Services\TagsService;
 use Illuminate\Http\Request;
@@ -16,8 +17,8 @@ class NewsController extends Controller
      */
     public function index()
     {
-        $posts = News::with('tags')->with('user')->published()->latest()->paginate();
-        return view('index', compact('posts'));
+        $posts = News::with('tags')->with('user')->latest()->paginate();
+        return view('admin.news.index', compact('posts'));
     }
 
     /**
@@ -27,7 +28,7 @@ class NewsController extends Controller
      */
     public function create()
     {
-        return view('post.create');
+        return view('admin.news.create');
     }
 
     /**
@@ -39,23 +40,11 @@ class NewsController extends Controller
     public function store(NewsRequest $request)
     {
         $attributes = $request->validated();
-        $post = \Auth::user()->posts()->create($attributes);
+        $post = \Auth::user()->news()->create($attributes);
         if (!empty($attributes['tags'])) {
             app()->make(TagsService::class, ['post' => $post, 'tagsString' => $attributes['tags']])->addTags();
         }
-        return redirect(route('posts.show', ['post' => $post]));
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param \App\Models\News $news
-     * @return \Illuminate\Http\Response
-     */
-    public function show(News $news)
-    {
-        return view('post.show')->with('post', $news);
-
+        return redirect(route('news.show', ['post' => $post]));
     }
 
     /**
@@ -66,7 +55,7 @@ class NewsController extends Controller
      */
     public function edit(News $news)
     {
-        return view('post.edit')->with('post', $news);
+        return view('admin.news.edit')->with('post', $news);
     }
 
     /**
@@ -78,12 +67,18 @@ class NewsController extends Controller
      */
     public function update(Request $request, News $news)
     {
-        $attributes = $request->validated();
-        $news->update($attributes);
-        if (!empty($attributes['tags'])) {
-            app()->make(TagsService::class, ['post' => $news, 'tagsString' => $attributes['tags']])->updateTags();
+        if ($request->has('slug')) {
+            $attributes = app(NewsRequest::class)->replace($request->all())->validated();
+            $news->update($attributes);
+            if (!empty($attributes['tags'])) {
+                app()->make(TagsService::class, ['post' => $news, 'tagsString' => $attributes['tags']])->updateTags();
+            }
+        } else {
+            $news->published = $request->has('published');
+            $news->save();
         }
-        return redirect(route('posts.show', ['post' => $news]));
+        flash('Состояние новости изменено');
+        return back();
     }
 
     /**

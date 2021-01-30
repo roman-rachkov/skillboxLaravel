@@ -41,6 +41,7 @@
     </header>
 
     @include('layouts.menu')
+    @include('layouts.admin-menu')
 
     @yield('promo')
 

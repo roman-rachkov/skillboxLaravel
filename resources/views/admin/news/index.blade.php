@@ -1,6 +1,6 @@
-@extends('admin.post.layout')
+@extends('admin.news.layout')
 
-@section('title', 'Список постов')
+@section('title', 'Список новостей')
 
 @section('content')
     <main class="ftable">
@@ -12,7 +12,7 @@
             <div class="ftable__column ftable__column_fifth">Управление</div>
         </div>
         <div class="ftable__column">
-        @each('admin.post.single', $posts, 'post')
+        @each('admin.news.single', $posts, 'post')
         </div>
     </main>
 @endsection

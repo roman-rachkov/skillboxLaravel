@@ -32,5 +32,6 @@ Route::get('/profile/{user}', 'UserController@show')->name('user.show');
 Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/', 'Admin\PostsController@index')->name('main');
     Route::resource('posts', 'Admin\PostsController');
+    Route::resource('news', 'Admin\NewsController');
     Route::get('feedback', 'Admin\FeedbacksController@index')->name('feedback');
 });

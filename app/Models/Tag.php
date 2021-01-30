@@ -29,7 +29,7 @@ class Tag extends Model
 
     public static function tagsCloud()
     {
-        return self::has('posts')->get();
+        return self::has('news')->orHas('posts')->get();
     }
 
 }

@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\English;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class NewsRequest extends FormRequest
 {
@@ -13,7 +15,7 @@ class NewsRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +26,17 @@ class NewsRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'slug' => [
+                'required',
+                Rule::unique('posts')->ignore($this->id),
+                'max:150',
+                new English
+            ],
+            'title' => 'required|max:100|min:5',
+            'short_desc' => 'required|max:250',
+            'long_desc' => 'required',
+            'published' => '',
+            'tags' => ''
         ];
     }
 }

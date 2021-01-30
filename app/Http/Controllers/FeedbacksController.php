@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreFeedbackRequest;
 use App\Models\Feedback;
-use Illuminate\Http\Request;
 
 class FeedbacksController extends Controller
 {
@@ -17,7 +16,8 @@ class FeedbacksController extends Controller
      */
     public function store(StoreFeedbackRequest $request)
     {
-        $feedback = Feedback::create($request->validated());
+        Feedback::create($request->validated());
+        flash('Сообщение успешно отправленно.');
         return redirect(route('main'));
 
     }
