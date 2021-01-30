@@ -29,6 +29,8 @@ Route::resource('posts', 'PostsController');
 
 Route::get('/profile/{user}', 'UserController@show')->name('user.show');
 
+Route::post('/comments', 'CommentsController@store')->name('comments.store');
+
 Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/', 'Admin\PostsController@index')->name('main');
     Route::resource('posts', 'Admin\PostsController');

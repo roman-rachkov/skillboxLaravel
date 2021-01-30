@@ -5,4 +5,3 @@
 </div>
 @include('post.tags', ['tags'=>$post->tags])
 <p>{{$post->short_desc}}</p>
-<a href="{{route('posts.show', ['post' => $post])}}">Читать даллее</a>

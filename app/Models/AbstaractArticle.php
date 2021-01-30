@@ -36,8 +36,14 @@ abstract class AbstaractArticle extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function getTypeAttribute(){
+    public function getTypeAttribute()
+    {
         return $this->type;
+    }
+
+    public function comments()
+    {
+        return $this->morphToMany(Comment::class, 'commentable');
     }
 
 }
