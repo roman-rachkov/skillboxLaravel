@@ -46,7 +46,7 @@
 <div class="mb-3">
     <label for="short-desc" class="form-label">Краткое описание статьи</label>
     <textarea class="form-control @error('short_desc') is-invalid @enderror" id="short-desc" rows="3"
-              maxlength="250" required
+              maxlength="255" required
               aria-describedby="post-short-desc-validation-feedback"
               name="short_desc">{{old('short_desc', $post->short_desc)}}</textarea>
     @error('short_desc')

@@ -11,7 +11,7 @@ abstract class AbstaractArticle extends Model
 
     protected string $type = 'post';
 
-    protected $fillable = ['slug', 'name', 'short_desc', 'long_desc', 'published'];
+    protected $fillable = ['slug', 'title', 'short_desc', 'long_desc', 'published'];
     protected $appends = [
         'type'
     ];

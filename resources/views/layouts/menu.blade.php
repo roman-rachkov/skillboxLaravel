@@ -4,6 +4,7 @@
         <a class="p-2 text-muted" href="{{route('news')}}">Новости</a>
         <a class="p-2 text-muted" href="{{route('about')}}">О нас</a>
         <a class="p-2 text-muted" href="{{route('contacts')}}">Контакты</a>
+        <a class="p-2 text-muted" href="{{route('statistics')}}">Статистика</a>
         @auth
             <a class="p-2 text-muted" href="{{route('posts.create')}}">Новая статья</a>
         @endauth
