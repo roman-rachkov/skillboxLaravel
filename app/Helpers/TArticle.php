@@ -1,25 +1,15 @@
 <?php
 
-namespace App\Models;
+namespace App\Helpers;
 
+use App\Models\Comment;
+use App\Models\Tag;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 
-abstract class AbstaractArticle extends Model
+trait TArticle
 {
     use HasFactory;
-
-    protected string $type = 'post';
-
-    protected $fillable = ['slug', 'title', 'short_desc', 'long_desc', 'published'];
-    protected $appends = [
-        'type'
-    ];
-
-    public function getRouteKeyName()
-    {
-        return 'slug';
-    }
 
     public function scopePublished($query)
     {
@@ -43,7 +33,7 @@ abstract class AbstaractArticle extends Model
 
     public function comments()
     {
-        return $this->morphToMany(Comment::class, 'commentable');
+        return $this->morphMany(Comment::class, 'commentable');
     }
 
 }

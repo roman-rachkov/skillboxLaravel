@@ -23,7 +23,7 @@ class TagFactory extends Factory
     public function definition()
     {
         return [
-            'name' => $this->faker->words(random_int(1, 2), true),
+            'name' => $this->faker->unique()->words(random_int(1, 2), true),
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ];

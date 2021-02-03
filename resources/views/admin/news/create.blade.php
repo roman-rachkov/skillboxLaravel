@@ -5,6 +5,6 @@
 @section('content')
     <form method="post" action="{{route('admin.news.store')}}">
         @csrf
-        @include('post.form', ['post'=>new \App\Models\News()])
+        @include('admin.news.form', ['news'=>new \App\Models\News()])
     </form>
 @endsection

@@ -11,17 +11,23 @@ class Comment extends Model
 
     protected $fillable = ['comment', 'user_id'];
 
-    public function news()
+//    public function news()
+//    {
+//        return $this->morphedByMany(News::class, 'commentable');
+//    }
+//
+//    public function posts()
+//    {
+//        return $this->morphedByMany(Post::class, 'commentable');
+//    }
+
+    public function commentable()
     {
-        return $this->morphedByMany(News::class, 'commentable');
+        return $this->morphTo();
     }
 
-    public function posts()
+    public function user()
     {
-        return $this->morphedByMany(Post::class, 'commentable');
-    }
-
-    public function user(){
         return $this->belongsTo(User::class);
     }
 

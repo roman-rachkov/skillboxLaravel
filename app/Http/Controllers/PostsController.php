@@ -50,7 +50,7 @@ class PostsController extends Controller
         $attributes = $request->validated();
         $post = \Auth::user()->posts()->create($attributes);
         if (!empty($attributes['tags'])) {
-            app()->make(TagsService::class, ['post' => $post, 'tagsString' => $attributes['tags']])->addTags();
+            app(TagsService::class)->setTaggable($post)->setTags($attributes['tags'])->addTags();
         }
         return redirect(route('posts.show', ['post' => $post]));
     }
@@ -93,7 +93,7 @@ class PostsController extends Controller
         $attributes = $request->validated();
         $post->update($attributes);
         if (!empty($attributes['tags'])) {
-            app()->make(TagsService::class, ['post' => $post, 'tagsString' => $attributes['tags']])->updateTags();
+            app(TagsService::class)->setTags($attributes['tags'])->setTaggable($post)->updateTags();
         }
         return redirect(route('posts.show', ['post' => $post]));
     }

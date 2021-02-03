@@ -51,6 +51,7 @@
 @section('content')
 
     @foreach($posts as $post)
+{{--        @dd($post)--}}
         @if($post->type === 'post')
             @include('post.single')
         @else

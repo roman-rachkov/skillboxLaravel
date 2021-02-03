@@ -4,7 +4,7 @@
     <div class="ftable__column ftable__column_third">{{$post->short_desc}}</div>
     <div class="ftable__column ftable__column_fourth">{{$post->created_at}}</div>
     <div class="ftable__column ftable__column_fifth">
-        <form action="{{route('admin.news.update',['news'=>$post])}}" method="post">
+        <form action="{{route('admin.news.publish',['news'=>$post])}}" method="post">
             @csrf
             @method('PATCH')
             <a href="{{route('admin.news.edit', ['news'=>$post])}}" style="text-decoration: none"

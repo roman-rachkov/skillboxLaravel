@@ -15,7 +15,7 @@ class TagsController extends Controller
      * !!ВОПРОС!!: Михаил, как сделать тут будет правильнее все таки?
      * При таком подходе из-за того что не вызываются методы пагинации мы выгружаем полностью все подходящее
      * новости и посты, но если их на теге будет более 10000? Время обработки запроса заметно увеличится, и еще получается
-     * что эта выборка происходит для каждой страницы. Я так понимаю для оптимизации все таки стоит делать через фасад DB и join?
+     * что эта выборка происходит для каждой страницы. Я так понимаю для оптимизации все таки стоит делать через фасад DB?
      *
      * @param Tag $tag
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
@@ -36,7 +36,7 @@ class TagsController extends Controller
 
         $posts = $posts->slice($offset, $perPage);
         $posts = new LengthAwarePaginator($posts, $total, $perPage, \request('page'));
-        $posts->withPath('/posts/tags/'.$tag->name);
+        $posts->withPath('/tags/'.$tag->name);
 
         return view('index', [
             'posts' => $posts,

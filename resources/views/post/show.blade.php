@@ -58,14 +58,8 @@
         @endadmin
     @endauth
     <a href="#" onclick="history.back()">Вернуться назад</a>
-{{--    <hr>--}}
-{{--    @forelse($post->history as $item)--}}
-{{--        <p>{{$item->name}} - {{$item->pivot->created_at->diffForHumans()}} - {{$item->pivot->before}} - {{$item->pivot->after}}</p>--}}
-{{--    @empty--}}
-{{--        <p>Нет изменеий</p>--}}
-{{--    @endforelse--}}
     <hr>
     @each('comments.single',$post->comments, 'comment', 'comments.empty')
-    @include('comments.comment-form')
+    @include('comments.comment-post')
 
 @endsection

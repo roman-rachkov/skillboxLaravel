@@ -5,5 +5,5 @@ return [
         'api_key' => env('PUSH_ALL_KEY', ''),
         'api_id' => env('PUSH_ALL_ID', ''),
     ],
-    'results_per_page' => env('RESULTS_PER_PAGE', 15),
+    'results_per_page' => 3,
 ];

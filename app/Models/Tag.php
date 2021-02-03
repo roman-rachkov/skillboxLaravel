@@ -27,6 +27,10 @@ class Tag extends Model
         return $this->morphedByMany(News::class, 'taggable');
     }
 
+    public function morphed(){
+        return $this->posts->union($this->news);
+    }
+
     public static function tagsCloud()
     {
         return self::has('news')->orHas('posts')->get();

@@ -6,7 +6,6 @@ use App\Models\News;
 use App\Models\Post;
 use App\Models\User;
 use DB;
-use Illuminate\Http\Request;
 
 class StatisticsController extends Controller
 {

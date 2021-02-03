@@ -42,9 +42,9 @@ class NewsController extends Controller
         $attributes = $request->validated();
         $post = \Auth::user()->news()->create($attributes);
         if (!empty($attributes['tags'])) {
-            app()->make(TagsService::class, ['post' => $post, 'tagsString' => $attributes['tags']])->addTags();
+            app(TagsService::class)->setTaggable($post)->setTags($attributes['tags'])->addTags();
         }
-        return redirect(route('news.show', ['post' => $post]));
+        return redirect(route('news.show', ['news' => $post]));
     }
 
     /**
@@ -55,7 +55,7 @@ class NewsController extends Controller
      */
     public function edit(News $news)
     {
-        return view('admin.news.edit')->with('post', $news);
+        return view('admin.news.edit')->with('news', $news);
     }
 
     /**
@@ -65,19 +65,15 @@ class NewsController extends Controller
      * @param \App\Models\News $news
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, News $news)
+    public function update(NewsRequest $request, News $news)
     {
-        if ($request->has('slug')) {
-            $attributes = app(NewsRequest::class)->replace($request->all())->validated();
-            $news->update($attributes);
-            if (!empty($attributes['tags'])) {
-                app()->make(TagsService::class, ['post' => $news, 'tagsString' => $attributes['tags']])->updateTags();
-            }
-        } else {
-            $news->published = $request->has('published');
-            $news->save();
+        $attributes = $request->validated();
+        $news->update($attributes);
+        if (!empty($attributes['tags'])) {
+            app(TagsService::class)->setTaggable($news)->setTags($attributes['tags'])->updateTags();
         }
-        flash('Состояние новости изменено');
+
+        flash('Новость обновлена');
         return back();
     }
 
