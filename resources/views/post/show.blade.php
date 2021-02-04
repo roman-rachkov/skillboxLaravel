@@ -1,11 +1,14 @@
 @extends('layouts.front')
 
-@section('title', $post->name)
+@section('title', $post->title)
 
 @section('content')
 
-    <p class="blog-post-meta">@datetime($post->created_at) by <a
-            href="{{route('user.show', ['user'=>$post->user->id])}}">{{$post->user->name}}</a></p>
+    <div class="meta" style="display: flex; justify-content: flex-start; align-items: center">
+        <img src="{{asset('img/'.$post->type.'.svg')}}" alt="{{$post->type}}" class="mb-3 me-1">
+        <p class="blog-post-meta">@datetime($post->created_at) by
+            <a href="{{route('user.show', ['user'=>$post->user->id])}}">{{$post->user->name}}</a></p>
+    </div>
     @include('post.tags', ['tags' => $post->tags])
     <p>{{$post->short_desc}}</p>
     <p>{{$post->long_desc}}</p>
@@ -23,7 +26,7 @@
             Редактировать
         </a>
         <br>
-        @else
+    @else
         @if($post->user->id === Auth::user()->id)
             <a href="{{route('posts.edit', ['post' => $post])}}" class="btn btn-primary">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
@@ -55,5 +58,8 @@
         @endadmin
     @endauth
     <a href="#" onclick="history.back()">Вернуться назад</a>
+    <hr>
+    @each('comments.single',$post->comments, 'comment', 'comments.empty')
+    @include('comments.comment-post')
 
 @endsection

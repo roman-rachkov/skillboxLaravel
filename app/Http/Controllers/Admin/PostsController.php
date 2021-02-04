@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Admin;
 
-
 use App\Http\Controllers\PostsController as MainPostsController;
 use App\Http\Requests\PostRequest;
 use App\Models\Post;
@@ -44,16 +43,9 @@ class PostsController extends MainPostsController
      * @param \App\Models\Post $post
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Post $post)
+    public function update(PostRequest $request, Post $post)
     {
-        if ($request->has('slug')) {
-            $postRequest = app(PostRequest::class)->replace($request->all());
-            return parent::update($postRequest, $post);
-        }
-        $post->published = $request->has('published');
-        $post->save();
-        flash('Состояние публикации изменено');
-        return back();
+        return parent::update($request, $post);
     }
 
 }

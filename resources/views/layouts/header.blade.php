@@ -35,12 +35,13 @@
                 @else
                     <a class="btn btn-sm btn-outline-secondary me-1" href="{{route('login')}}">Войти</a>
                     <a class="btn btn-sm btn-outline-secondary" href="{{route('register')}}">Регистрация</a>
-                @endif
+                @endauth
             </div>
         </div>
     </header>
 
     @include('layouts.menu')
+    @include('layouts.admin-menu')
 
     @yield('promo')
 

@@ -1,5 +1,5 @@
 @component('mail::message')
-    # Обновлена статья: {{$post->name}}
+    # Обновлена статья: {{$post->title}}
 
     {{$post->short_desc}}
 

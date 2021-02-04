@@ -33,7 +33,7 @@ class PostRequest extends FormRequest
                 'max:150',
                 new English
             ],
-            'name' => 'required|max:100|min:5',
+            'title' => 'required|max:100|min:5',
             'short_desc' => 'required|max:250',
             'long_desc' => 'required',
             'published' => '',

@@ -19,12 +19,21 @@ class Tag extends Model
 
     public function posts()
     {
-        return $this->belongsToMany(Post::class);
+        return $this->morphedByMany(Post::class, 'taggable');
+    }
+
+    public function news()
+    {
+        return $this->morphedByMany(News::class, 'taggable');
+    }
+
+    public function morphed(){
+        return $this->posts->union($this->news);
     }
 
     public static function tagsCloud()
     {
-        return self::has('posts')->get();
+        return self::has('news')->orHas('posts')->get();
     }
 
 }

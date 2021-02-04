@@ -47,11 +47,23 @@ class User extends Authenticatable
         return $this->hasMany(Post::class);
     }
 
-    public function roles(){
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
+
+    public function news()
+    {
+        return $this->hasMany(News::class);
+    }
+
+    public function roles()
+    {
         return $this->belongsToMany(Role::class);
     }
 
-    public function isAdmin(){
+    public function isAdmin()
+    {
         return $this->hasRole('admin');
     }
 

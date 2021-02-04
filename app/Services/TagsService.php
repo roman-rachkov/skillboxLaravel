@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-use App\Models\Post;
+use App\Helpers\ITaggable;
 use App\Models\Tag;
 use Illuminate\Support\Collection;
 
@@ -10,22 +10,16 @@ class TagsService
 {
 
     private Collection $tags;
-    private Post $post;
-
-    public function __construct(Post $post, string $tagsString)
-    {
-        $this->setTags($tagsString);
-        $this->setPost($post);
-    }
+    private ITaggable $taggable;
 
     /**
-     * Устанавливает пост для которого нужно обновить теги
-     * @param Post $post
+     * Устанавливает модель для которого нужно обновить теги
+     * @param ITaggable $taggable
      * @return $this
      */
-    public function setPost(Post $post)
+    public function setTaggable(ITaggable $taggable)
     {
-        $this->post = $post;
+        $this->taggable = $taggable;
         return $this;
     }
 
@@ -46,14 +40,14 @@ class TagsService
      */
     public function updateTags()
     {
-        $postTags = $this->post->tags->keyBy('name');
-        $ids = $postTags->intersectByKeys($this->tags)->pluck('id')->toArray();
-        $tagsToAttach = $this->tags->diffKeys($postTags);
+        $oldTags = $this->taggable->tags->keyBy('name');
+        $ids = $oldTags->intersectByKeys($this->tags)->pluck('id')->toArray();
+        $tagsToAttach = $this->tags->diffKeys($oldTags);
         foreach ($tagsToAttach as $tag) {
             $tag = Tag::firstOrCreate(['name' => $tag]);
             $ids[] = $tag->id;
         }
-        $this->post->tags()->sync($ids);
+        $this->taggable->tags()->sync($ids);
     }
 
     /**
@@ -64,7 +58,7 @@ class TagsService
     {
         foreach ($this->tags as $tag) {
             $tag = Tag::firstOrCreate(['name' => $tag]);
-            $this->post->tags()->attach($tag);
+            $this->taggable->tags()->attach($tag);
         }
     }
 

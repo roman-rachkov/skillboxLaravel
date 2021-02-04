@@ -1,4 +1,4 @@
-@extends('layouts.front')
+@extends('admin.post.layout')
 
 @section('title', 'Редктирование статьи')
 

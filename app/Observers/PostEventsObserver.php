@@ -27,9 +27,9 @@ class PostEventsObserver
     public function created(Post $post)
     {
         User::where('email', $this->adminEmail)->first()->notify(new PostCreatedNotification($post));
-        flash('Статья "' . $post->name . '" успешно создна.');
+        flash('Статья "' . $post->title . '" успешно создна.');
         app(PushAllService::class)
-            ->sendMessage('Новая статья: ' . $post->name, url: route('posts.show', ['post' => $post]))
+            ->sendMessage('Новая статья: ' . $post->title, url: route('posts.show', ['post' => $post]))
             ->getBody();
     }
 
@@ -42,7 +42,7 @@ class PostEventsObserver
     public function updated(Post $post)
     {
         User::where('email', $this->adminEmail)->first()->notify(new PostUpdatedNotification($post));
-        flash('Статья "' . $post->name . '" успешно обновлена.');
+        flash('Статья "' . $post->title . '" успешно обновлена.');
 
     }
 
@@ -55,7 +55,7 @@ class PostEventsObserver
     public function deleted(Post $post)
     {
         User::where('email', $this->adminEmail)->first()->notify(new PostDeletedNotification($post));
-        flash('Статья "' . $post->name . '" успешно удалена.');
+        flash('Статья "' . $post->title . '" успешно удалена.');
     }
 
     /**

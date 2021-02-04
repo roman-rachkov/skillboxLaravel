@@ -18,14 +18,14 @@
     </div>
 </div>
 <div class="mb-3">
-    <label for="post-name" class="form-label">Название статьи</label>
-    <input type="text" class="form-control @error('name') is-invalid @enderror" id="post-name"
-           placeholder="Статья о дожде" name="name"
-           aria-describedby="post-name-validation-feedback"
-           required maxlength="100" minlength="5" value="{{old('name', $post->name)}}"
+    <label for="post-title" class="form-label">Название статьи</label>
+    <input type="text" class="form-control @error('title') is-invalid @enderror" id="post-title"
+           placeholder="Статья о дожде" name="title"
+           aria-describedby="post-title-validation-feedback"
+           required maxlength="100" minlength="5" value="{{old('title', $post->title)}}"
     >
-    @error('name')
-    <div id="post-name-validation-feedback" class="invalid-feedback">
+    @error('title')
+    <div id="post-title-validation-feedback" class="invalid-feedback">
         {{$message}}
     </div>
     @enderror
@@ -46,7 +46,7 @@
 <div class="mb-3">
     <label for="short-desc" class="form-label">Краткое описание статьи</label>
     <textarea class="form-control @error('short_desc') is-invalid @enderror" id="short-desc" rows="3"
-              maxlength="250" required
+              maxlength="255" required
               aria-describedby="post-short-desc-validation-feedback"
               name="short_desc">{{old('short_desc', $post->short_desc)}}</textarea>
     @error('short_desc')
@@ -80,7 +80,7 @@
 @push('scripts')
     <script>
         $(document).ready(function () {
-            const postNameField = $('#post-name');
+            const postNameField = $('#post-title');
             const postSlugField = $('#post-slug');
             postNameField.liTranslit({
                 elAlias: postSlugField

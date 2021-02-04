@@ -1,6 +1,6 @@
 @extends('layouts.front')
 
-@section('title', 'Редктирование статьи')
+@section('title', 'Редактирование статьи')
 
 @section('content')
     <form method="post" action="{{route('posts.update', ['post'=>$post])}}">

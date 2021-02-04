@@ -1,13 +1,16 @@
 <div class="ftable__row">
     <div class="ftable__column ftable__column_first">{{$post->id}}</div>
-    <div class="ftable__column ftable__column_second">{{$post->name}}</div>
+    <div class="ftable__column ftable__column_second">{{$post->title}}</div>
     <div class="ftable__column ftable__column_third">{{$post->short_desc}}</div>
     <div class="ftable__column ftable__column_fourth">{{$post->created_at}}</div>
     <div class="ftable__column ftable__column_fifth">
-        <form action="{{route('admin.posts.update',['post'=>$post])}}" method="post">
+        <form action="{{route('admin.posts.publish',['post'=>$post])}}" method="post">
             @csrf
             @method('PATCH')
-            <a href="{{route('admin.posts.edit', ['post'=>$post])}}">
+            <a href="{{route('admin.posts.edit', ['post'=>$post])}}" style="text-decoration: none"
+               data-bs-toggle="tooltip"
+               data-bs-placement="top"
+               title="Редактировать">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil"
                      viewBox="0 0 16 16">
                     <path

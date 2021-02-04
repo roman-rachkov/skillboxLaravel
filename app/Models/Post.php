@@ -2,33 +2,43 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Helpers\ICommentable;
+use App\Helpers\ITaggable;
+use App\Helpers\TArticle;
 use Illuminate\Database\Eloquent\Model;
 
-class Post extends Model
+class Post extends Model implements ICommentable, ITaggable
 {
-    use HasFactory;
+    use TArticle;
 
-    protected $fillable = ['slug', 'name', 'short_desc', 'long_desc', 'published'];
+    protected $fillable = ['slug', 'title', 'short_desc', 'long_desc', 'published'];
+    protected $appends = [
+        'type'
+    ];
+
+    public string $type = 'post';
 
     public function getRouteKeyName()
     {
         return 'slug';
     }
 
-    public function scopePublished($query)
+    protected static function boot()
     {
-        return $query->where('published', true);
+        parent::boot();
+
+        static::updating(function (Post $post) {
+            $after = $post->getDirty();
+            $post->history()->attach(\Auth::user()->id, [
+                'before' => json_encode(\Arr::only($post->fresh()->toArray(), array_keys($after))),
+                'after' => json_encode($after),
+            ]);
+        });
     }
 
-    public function tags()
-    {
-        return $this->belongsToMany(Tag::class);
-    }
 
-    public function user()
+    public function history()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsToMany(User::class, 'post_histories')->withPivot(['before', 'after'])->withTimestamps();
     }
-
 }

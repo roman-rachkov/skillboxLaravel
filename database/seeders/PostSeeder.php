@@ -20,7 +20,7 @@ class PostSeeder extends Seeder
     {
         $tags = Tag::all()->pluck('id')->toArray();
 
-        Post::factory(rand(10, 30))
+        Post::factory(rand(30, 90))
             ->create(new Sequence(
                 ['user_id' => 1],
                 ['user_id' => 2],
